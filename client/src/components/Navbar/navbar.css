@@ -1,0 +1,120 @@
+.cusNavbar {
+    background-color: #001219;
+    color: white;
+    font-family: "Zoho Puvi";
+}
+
+.cusNavbar .navItems {
+    padding: 1%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cusNavbar .navItems .searchBar {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.cusNavbar .navItems #searchQueryInput {
+    width: 100%;
+    height: 2.5rem;
+    background: #f5f5f5;
+    outline: none;
+    border: none;
+    border-radius: 1.625rem;
+    padding: 0 3.5rem 0 1.5rem;
+    font-size: 1rem;
+    font-family: 'Zoho Puvi';
+    
+}
+
+.cusNavbar .navItems #searchQuerySubmit {
+    width: 3.0rem;
+    height: 2.5rem;
+    margin-left: -3.5rem;
+    background: none;
+    border: none;
+    outline: none;
+}
+
+.cusNavbar .navItems #searchQuerySubmit:hover {
+    cursor: pointer;
+}
+
+.cusNavbar .navItems .profile {
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.cusNavbar .navItems .profile .userProfile {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.mobileNav {
+    display: none;
+}
+.cusNavbar .serachBar {
+    display: flex;
+    gap: 30px;
+    /* font-size: 20px; */
+}
+
+.cusNavbar .serachBar a {
+    color: #f5f5f5;
+    transition: all 0.3s ease-in-out;
+    border: 2px solid #001219;
+    padding: 0 2%;
+}
+
+.cusNavbar .serachBar .active {
+    color: #000000;
+    border: 2px solid white;
+    padding: 0 2%;
+    border-radius: 10px;
+    background-color: #f5f5f5;
+}
+
+.cusNavbar .serachBar a:hover {
+    color: #000000;
+    border: 2px solid white;
+    padding: 0 2%;
+    border-radius: 10px;
+    background-color: #f5f5f5;
+}
+
+@media only screen and (max-width: 900px) {
+    .cusNavbar .companyDets {
+        font-size: 25px;
+    }
+    .cusNavbar {
+        font-size: 15px;
+    }
+    .cusNavbar .navItems { 
+        flex-direction: column;
+        gap: 20px;
+    }
+    .cusNavbar .navItems a {
+        padding: 0;
+    }
+    .cusNavbar .profile .avatar{
+        display: none;
+    }
+
+    .cusNavbar .profile .userDetails {
+        display: none;
+    }
+    .cusNavbar .profile .expand{
+        display: none;
+    }
+
+}
+

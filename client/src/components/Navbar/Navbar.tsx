@@ -12,7 +12,7 @@ const Navbar = ({ userDetails }: {userDetails: any}) => {
   const openMenu2 = Boolean(anchorE2);
   const profileItems = ['Logout']; // Add more profile menu options here
   const handleProfileMenuClose = (e: any) => {
-    if (e.target.id === profileItems[1]) {
+    if (e.target.id === profileItems[0]) {
       logout();
       setAnchorE2(null)
     }

@@ -39,7 +39,7 @@ const CustomerDetailExport = () => {
         const startDate = moment(date);
         return {
             date: new Date(date).toLocaleDateString(),
-            fromToday: startDate.fromNow(),
+            fromToday: startDate.fromNow(true),
             billAmount: billAmount === 0 ? `-` : `₹ ${Number(billAmount).toLocaleString('en-IN')} /-`,
             billNumber: billNumber === 0 ? `-` : billNumber,
             voucherAmount: voucherAmount === 0 ? `-` : `₹ ${Number(voucherAmount).toLocaleString('en-IN')} /-`

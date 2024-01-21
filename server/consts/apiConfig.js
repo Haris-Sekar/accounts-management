@@ -41,7 +41,11 @@ const apis = [
       API_METHODS.DELETE,
     ],
     module: MODULES.VOUCHERS,
-  },
+  }, {
+    path: "/dashboard",
+    method: [API_METHODS.GET],
+    module: MODULES.DASHBOARD
+  }
 ];
 
 export default apis;

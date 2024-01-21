@@ -3,24 +3,25 @@ import mongoose, { Schema } from "mongoose";
 const bill = new mongoose.Schema({
     billNumber: {
         type: Number,
-        require: true,
+        required: true, 
     },
     billDate: {
         type: Number,
-        require: true
+        required: true,
     },
     customerId: {
         type: Schema.Types.ObjectId,
-        ref:'customer',
+        ref: 'customer',
+        required: true,
     },
     amount: {
         type: Number,
-        require: true
+        required: true,
     },
     userId: {
-      type: mongoose.Schema.ObjectId,
-      ref: 'user',
-      require: true
+        type: mongoose.Schema.ObjectId,
+        ref: 'user',
+        required: true,
     }
 });
 

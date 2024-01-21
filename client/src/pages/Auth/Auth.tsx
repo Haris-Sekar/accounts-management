@@ -1,4 +1,4 @@
-import { Container, Box, Grid, TextField, Button, Link } from "@mui/material";
+import { Container, Box, Grid, TextField, Button } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { IAuthForm } from "../../models/IAuthForm";
@@ -16,7 +16,7 @@ const Auth = () => {
     const token = localStorage.getItem('token');
 
     if(token) {
-      navigate('/app');
+      navigate('/');
     }
   })
 
@@ -67,10 +67,10 @@ const Auth = () => {
     console.log(errors);
   };
 
-  const handleRegisterToggle = () => {
-    setRegisterMode((prev) => !prev);
-    reset(initialValues);
-  };
+  // const handleRegisterToggle = () => {
+  //   setRegisterMode((prev) => !prev);
+  //   reset(initialValues);
+  // };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -159,6 +159,7 @@ const Auth = () => {
                     error={Boolean(errors.password)}
                     helperText={errors.password?.message}
                     autoComplete="new-password"
+                    type="password"
                   />
                 )}
               />
@@ -195,7 +196,7 @@ const Auth = () => {
           >
             {registerMode ? "Sign Up" : "Sign In"}
           </Button>
-          <Grid container justifyContent="flex-end" sx={{ cursor: "pointer" }}>
+          {/* <Grid container justifyContent="flex-end" sx={{ cursor: "pointer" }}>
             <Grid item>
               <Link onClick={handleRegisterToggle} variant="body2">
                 {registerMode
@@ -203,8 +204,8 @@ const Auth = () => {
                   : "Don't have an account? Sign Up"}
               </Link>
             </Grid>
-          </Grid>
-          {!registerMode && (
+          </Grid> */}
+          {/* {!registerMode && (
             <Grid
               container
               justifyContent="flex-end"
@@ -214,7 +215,7 @@ const Auth = () => {
                 <Link variant="body2">Forgot Password?</Link>
               </Grid>
             </Grid>
-          )}
+          )} */}
         </Box>
       </Box>
     </Container>

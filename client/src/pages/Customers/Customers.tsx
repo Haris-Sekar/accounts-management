@@ -117,6 +117,8 @@ const Customers = () => {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
+    console.log("asdf");
+    
     setEditValues(undefined);
     setOpen(false)
   };
@@ -144,8 +146,8 @@ const Customers = () => {
     });
   }
 
-  function editComponent(id: any) { return (<span id={id} onClick={handleEdit}><Edit /></span>) }
-  const deleteComponent = (id: string | undefined) => (<span id={id} onClick={handleDelete}><Delete /></span>)
+  function editComponent(id: any) { return (<span style={{cursor: 'pointer'}} id={id} onClick={handleEdit}><Edit /></span>) }
+  const deleteComponent = (id: string | undefined) => (<span id={id} style={{cursor: 'pointer'}} onClick={handleDelete}><Delete /></span>)
   function handleEdit(_e: any) {
     const data = customers.filter((customer: ICustomerDetails) => customer._id === _e.currentTarget.id)[0];
     setEditValues(data)

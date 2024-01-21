@@ -175,7 +175,7 @@ const AddCustomer = ({
             sx={{ mb: 2 }}
             variant="contained"
             color="error"
-            onClick={() => handleClose}
+            onClick={() => handleClose()}
           >
             Cancel
           </Button>

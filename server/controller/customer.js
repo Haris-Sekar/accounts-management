@@ -55,7 +55,7 @@ export const addCustomer = async (req, res) => {
 export const getCustomers = async (req, res) => {
   let code, response;
   try {
-    const customers = await customer.find();
+    const customers = await customer.find({userId: req.id});
     let parsedCustomer = [];
 
     for (let cus in customers) {

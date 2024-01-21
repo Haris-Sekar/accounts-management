@@ -10,7 +10,7 @@ import { useState } from "react";
 const Navbar = ({ userDetails }: {userDetails: any}) => {
   const [anchorE2, setAnchorE2] = useState(null);
   const openMenu2 = Boolean(anchorE2);
-  const profileItems = ['Manage Users', 'Logout']; // Add more profile menu options here
+  const profileItems = ['Logout']; // Add more profile menu options here
   const handleProfileMenuClose = (e: any) => {
     if (e.target.id === profileItems[1]) {
       logout();
@@ -34,7 +34,7 @@ const Navbar = ({ userDetails }: {userDetails: any}) => {
     <>
       <div className="cusNavbar">
         <div className="navItems">
-          <div className="companyDets">AVS ENTERPRISES</div>
+          <div className="companyDets" onClick={() => navigate('/app')}>AVS ENTERPRISES</div>
           <div className="serachBar">
             {/* <SearchBar /> */}
             <Link

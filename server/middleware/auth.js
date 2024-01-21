@@ -47,6 +47,7 @@ export const checkPermission = async (req, res, next) => {
   let code, response;
   checkPermissionTry: try {
     const permission = await userPermission.findOne({ userId: req.id });
+    console.log();
     let baseUrl = req.baseUrl.replace("/api/v1", "");
     let method = req.route.stack[0].method;
     let module = undefined;
@@ -73,12 +74,11 @@ export const checkPermission = async (req, res, next) => {
       code: 401,
     };
 
-    const modulePermission = permission.permission.find(
+
+    const modulePermission = permission.permission[0].permissions.find(
       (perm) => perm.module === module
     );
-
-    console.log(modulePermission);
-
+    
     if (method === API_METHODS.GET && modulePermission.permission[0]) {
       next();
     } else if (method === API_METHODS.POST && modulePermission.permission[1]) {

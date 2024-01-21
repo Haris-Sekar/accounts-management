@@ -51,7 +51,7 @@ export const getVouchers = async (req, res) => {
     let code, response;
 
     try {
-        const vouchers = await voucher.find().populate({ path: 'customerId', select: `customerName` });
+        const vouchers = await voucher.find({userId: req.id}).populate({ path: 'customerId', select: `customerName` });
 
         let parsedVouchers = [];
 

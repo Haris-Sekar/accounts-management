@@ -60,7 +60,7 @@ const AddVoucher = ({ handleClose, editValues }: { handleClose: any, editValues:
             });
       } else {
          console.log(e);
-         
+
          addVoucher(e)
             .then(() => {
                //@ts-ignore
@@ -87,6 +87,8 @@ const AddVoucher = ({ handleClose, editValues }: { handleClose: any, editValues:
 
    const [toggleCheque, setToggleCheque] = useState<boolean>(false);
 
+   const [balance, setBalance] = useState(0);
+
    return (
       <Container component="main" maxWidth="xs">
          <Box
@@ -106,7 +108,7 @@ const AddVoucher = ({ handleClose, editValues }: { handleClose: any, editValues:
                <Grid container spacing={2}>
                   <Grid item xs={12}>
                      <Controller
-                        disabled ={ editValues?._id !== undefined}
+                        disabled={editValues?._id !== undefined}
                         name="customerId"
                         control={control}
                         render={({ ...field }) => (
@@ -119,12 +121,16 @@ const AddVoucher = ({ handleClose, editValues }: { handleClose: any, editValues:
                               sx={{ width: 300 }}
                               onChange={(_event, value) => {
                                  control._formValues.customerId = value?.id;
+                                 setBalance(Number(customers.find((customer) => customer._id === value?.id)?.balance));
                                  return value?.id;
                               }}
                               renderInput={(params) => <TextField {...params} label="Customer" />}
                            />
                         )}
                      />
+                  </Grid>
+                  <Grid item xs={12}>
+                     { balance !== 0 && !Number.isNaN(balance) ? (<>Total Balance: <span style={{ color: '#FF4244', fontWeight: 'bold' }}> ₹ {balance.toLocaleString('en-IN')} /-</span></>) : <></>}
                   </Grid>
                   <Grid item xs={12}>
                      <Controller

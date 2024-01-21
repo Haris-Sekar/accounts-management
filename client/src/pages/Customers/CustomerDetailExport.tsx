@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getCustomers } from "../../action/action";
+import moment from "moment";
 
 
 const CustomerDetailExport = () => {
@@ -15,19 +16,19 @@ const CustomerDetailExport = () => {
         dispatch(getCustomers(params.id));
     }, [dispatch, params.id]);
 
- 
+
 
     const { customer } = useSelector(
         (state: any) => state.customerReducer
     );
 
     useEffect(() => {
-        if(customer.customerTransDetails) {
-            document.title =  `${customer.customerDetails.customerName} Balance Sheet`
+        if (customer.customerTransDetails) {
+            document.title = `${customer.customerDetails.customerName} Balance Sheet`
             window.print()
         }
     }, [customer])
-    const rows: { date: string; billAmount: string; billNumber: string | number; voucherAmount: string; }[] = [];
+    const rows: { date: string; fromToday: string; billAmount: string; billNumber: string | number; voucherAmount: string; }[] = [];
 
     function createData(
         date: number,
@@ -35,8 +36,10 @@ const CustomerDetailExport = () => {
         billAmount: number,
         voucherAmount: number
     ) {
+        const startDate = moment(date);
         return {
             date: new Date(date).toLocaleDateString(),
+            fromToday: startDate.fromNow(),
             billAmount: billAmount === 0 ? `-` : `₹ ${Number(billAmount).toLocaleString('en-IN')} /-`,
             billNumber: billNumber === 0 ? `-` : billNumber,
             voucherAmount: voucherAmount === 0 ? `-` : `₹ ${Number(voucherAmount).toLocaleString('en-IN')} /-`
@@ -59,6 +62,7 @@ const CustomerDetailExport = () => {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Date</TableCell>
+                                    <TableCell>Number of Days</TableCell>
                                     <TableCell align="right">Bill Number</TableCell>
                                     <TableCell align="right">Bill Amount</TableCell>
                                     <TableCell align="right">Paid Amount</TableCell>
@@ -73,9 +77,12 @@ const CustomerDetailExport = () => {
                                         <TableCell component="th" scope="row">
                                             {row.date}
                                         </TableCell>
+                                        <TableCell component="th" scope="row">
+                                            {row.fromToday}
+                                        </TableCell>
                                         <TableCell align="right">{row.billNumber}</TableCell>
-                                        <TableCell align="right" sx={{color: "#FF4244"}}>{row.billAmount}</TableCell>
-                                        <TableCell align="right" sx={{color: "#5DCA36"}}>{row.voucherAmount}</TableCell>
+                                        <TableCell align="right" sx={{ color: "#FF4244" }}>{row.billAmount}</TableCell>
+                                        <TableCell align="right" sx={{ color: "#5DCA36" }}>{row.voucherAmount}</TableCell>
                                     </TableRow>
                                 ))}
                                 <TableRow>
@@ -83,18 +90,18 @@ const CustomerDetailExport = () => {
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Total Bill Amount</TableCell>
-                                    <TableCell align="right" sx={{color: "#FF4244"}}>{`₹ ${Number(customer.customerDetails.totalSalesAmount).toLocaleString('en-IN')} /-`}</TableCell>
+                                    <TableCell align="right" sx={{ color: "#FF4244" }}>{`₹ ${Number(customer.customerDetails.totalSalesAmount).toLocaleString('en-IN')} /-`}</TableCell>
                                     <TableCell align="right"></TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Total Paid Amount</TableCell>
                                     <TableCell align="right"></TableCell>
-                                    <TableCell align="right" sx={{color: '#5DCA36'}}>{`₹ ${Number(customer.customerDetails.totalAmountRecived).toLocaleString('en-IN')} /-`}</TableCell>
+                                    <TableCell align="right" sx={{ color: '#5DCA36' }}>{`₹ ${Number(customer.customerDetails.totalAmountRecived).toLocaleString('en-IN')} /-`}</TableCell>
                                 </TableRow>
 
                                 <TableRow>
                                     <TableCell>Old Balance</TableCell>
-                                    <TableCell align="right" sx={{color: '#FF4244'}}>{`₹ ${Number(customer.customerDetails.oldBalance).toLocaleString('en-IN')} /-`}</TableCell>
+                                    <TableCell align="right" sx={{ color: '#FF4244' }}>{`₹ ${Number(customer.customerDetails.oldBalance).toLocaleString('en-IN')} /-`}</TableCell>
                                     <TableCell align="right"></TableCell>
                                 </TableRow>
                                 <TableRow>
@@ -106,14 +113,14 @@ const CustomerDetailExport = () => {
                                 <TableRow>
                                     <TableCell colSpan={2} />
                                     <TableCell width={120}>Total Balance</TableCell>
-                                    <TableCell width={120} sx={{color: "#FF4244"}}>{`₹ ${Number(customer.customerDetails.balance).toLocaleString('en-IN')} /-`}</TableCell>
+                                    <TableCell width={120} sx={{ color: "#FF4244" }}>{`₹ ${Number(customer.customerDetails.balance).toLocaleString('en-IN')} /-`}</TableCell>
                                     <TableCell align="right"></TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
-                    </TableContainer> 
+                    </TableContainer>
                 </Box>
-            )} 
+            )}
 
         </>
     )

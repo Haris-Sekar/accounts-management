@@ -90,6 +90,13 @@
     border-radius: 10px;
     background-color: #f5f5f5;
 }
+.cusNavbar .companyDets {
+    font-size: 24px;
+    word-spacing: 7px;
+    letter-spacing: 1.5px;
+    font-weight: bolder;
+    cursor: pointer;
+}
 
 @media only screen and (max-width: 900px) {
     .cusNavbar .companyDets {

@@ -46,7 +46,7 @@ export const getBills = async (req, res) => {
     let code, response;
     try {
 
-        let bills = await Bill.find().populate({ path: 'customerId', select: `customerName` });
+        let bills = await Bill.find({userId: req.id}).populate({ path: 'customerId', select: `customerName` });
 
         let parsedBills = [];
 

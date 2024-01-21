@@ -1,0 +1,74 @@
+.customerDetails .customerAvatar {
+  font-size: 25px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.customerDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 5%;
+}
+
+.customerDetails .phoneNumber {
+  text-decoration: underline;
+  cursor: pointer;
+  display: flex;
+  gap: 5%;
+}
+.customerCardPaper {
+  margin: auto;
+  margin-top: 2%;
+}
+.statsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5%;
+  margin: auto;
+  margin-top: 3%;
+  width: fit-content;
+  padding: 2%;
+}
+.statsCard {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+.statsCard .cardValue {
+  font-weight: bolder;
+  font-size: 24px;
+}
+
+.transData {
+  width: fit-content;
+  margin: auto;
+  margin-top: 2%;
+}
+
+@media only screen and (max-width: 1200px) {
+  .statsContainer {
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+}
+
+@media print {
+  @page {
+    margin: 30px;
+  } 
+} 
+
+.exportBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5% 0;
+}
+

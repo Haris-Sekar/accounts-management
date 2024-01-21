@@ -1,11 +1,35 @@
-import { Avatar, Badge } from "@mui/material";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Avatar, Menu, MenuItem } from "@mui/material";
 import "./navbar.css";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown"; 
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import "@coreui/coreui/dist/css/coreui.min.css";
 import { USER_TYPE } from "../../consts/consts";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-const Navbar = ({ userDetails }) => {
+const Navbar = ({ userDetails }: {userDetails: any}) => {
+  const [anchorE2, setAnchorE2] = useState(null);
+  const openMenu2 = Boolean(anchorE2);
+  const profileItems = ['Manage Users', 'Logout']; // Add more profile menu options here
+  const handleProfileMenuClose = (e: any) => {
+    if (e.target.id === profileItems[1]) {
+      logout();
+      setAnchorE2(null)
+    }
+    setAnchorE2(null)
+  };
+  const handleCompanyMenuOpen = (event: any) => {
+    if(anchorE2 !== null) {
+      setAnchorE2(null)
+    } else {
+      setAnchorE2(event.currentTarget);
+    }
+  }; 
+  const navigate = useNavigate();
+  const logout = () => {
+    localStorage.clear();
+    navigate('/auth')
+  }
   return (
     <>
       <div className="cusNavbar">
@@ -60,8 +84,23 @@ const Navbar = ({ userDetails }) => {
                 </div>
                 <div className="email">{userDetails?.email}</div>
               </div>
-              <div className="expand">
-                <ArrowDropDownIcon sx={{ fontSize: 30 }} />
+              <div className="expand"><span onClick={handleCompanyMenuOpen}>
+                <ArrowDropDownIcon sx={{ fontSize: 30 }} /></span><Menu
+                  anchorEl={anchorE2}
+                  open={openMenu2}
+                  onClose={handleProfileMenuClose}
+                  PaperProps={{
+                    style: {
+                      width: '180px', // Adjust the width as needed
+                    },
+                  }}
+                >
+                  {profileItems.map((item, index) => (
+                    <MenuItem key={index} onClick={handleProfileMenuClose} id={item}>
+                      {item}
+                    </MenuItem>
+                  ))}
+                </Menu>
               </div>
             </div>
           </div>

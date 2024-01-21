@@ -22,7 +22,8 @@ export const addVoucher = async (req, res) => {
             isCheque: isCheque ? true : false,
             chequeDate: isCheque ? chequeDate : undefined,
             chequeNumber: isCheque ? chequeNumber : undefined,
-            isChequeCredited: isChequeCredited ? isChequeCredited : false
+            isChequeCredited: isChequeCredited ? isChequeCredited : false,
+            userId: req.id
         });
 
         const result = await newVoucher.save();
@@ -50,11 +51,23 @@ export const getVouchers = async (req, res) => {
     let code, response;
 
     try {
-        const vouchers = await voucher.find();
+        const vouchers = await voucher.find().populate({ path: 'customerId', select: `customerName` });
+
+        let parsedVouchers = [];
+
+        for(let index in vouchers) {
+            const voucher = vouchers[index];
+            let tempVoucher = {
+                ...voucher._doc,
+                customerName: voucher.customerId?.customerName
+            };
+            parsedVouchers.push(tempVoucher);
+        }
+
         if (vouchers) {
             response = {
                 message: `Vouchers fetched successfully`,
-                vouchers,
+                vouchers: parsedVouchers,
                 code: 200
             }
             code = 200;

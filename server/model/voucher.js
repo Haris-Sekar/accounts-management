@@ -3,6 +3,7 @@ import mongoose, { Schema } from "mongoose";
 const voucher = new mongoose.Schema({
     customerId: {
         type: Schema.Types.ObjectId,
+        ref:'customer',
         require: true
     },
     amount: {
@@ -27,6 +28,14 @@ const voucher = new mongoose.Schema({
     },
     isChequeCredited: {
         type: Boolean
+    },
+    bankName: {
+        type: String
+    },
+    userId: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'user',
+      require: true
     }
 });
 

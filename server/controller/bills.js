@@ -22,7 +22,8 @@ export const addBill = async (req, res) => {
             billNumber: billNo,
             billDate: billDate,
             customerId: customerId,
-            amount: amount
+            amount: amount,
+            userId: req.id
         });
 
         const result = await newBill.save();

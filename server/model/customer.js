@@ -3,19 +3,25 @@ import mongoose from "mongoose";
 const customer = new mongoose.Schema({
   customerName: {
     type: String,
-    required: true,
+    require: true,
   },
   phoneNumber: {
     type: Number,
-    required: true,
+    unique: true,
+    require: true,
   },
   area: {
     type: String,
-    required: true,
+    require: true,
   },
   balance: {
     type: Number,
-    required: true
+    require: true
+  },
+  userId: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'user',
+    require: true
   }
 }); 
 const model = mongoose.model('customer', customer);

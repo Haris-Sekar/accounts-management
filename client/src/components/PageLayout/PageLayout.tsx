@@ -3,16 +3,16 @@ import Navbar from "../Navbar/Navbar";
 import { useEffect } from "react";
 const PageLayout = () => {
 
-    const userDetails = JSON.parse(localStorage.getItem("user_details"));
+  const userDetails = JSON.parse(localStorage.getItem("user_details") as string);
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-      const token  = localStorage.getItem("token");
-      if(!token) {
-        navigate('/auth');
-      }
-    }, [])
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate('/auth');
+    }
+  }, [])
 
   return (
     <div>

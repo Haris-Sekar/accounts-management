@@ -16,6 +16,11 @@ const bill = new mongoose.Schema({
     amount: {
         type: Number,
         require: true
+    },
+    userId: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'user',
+      require: true
     }
 });
 

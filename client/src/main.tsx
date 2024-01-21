@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css';
+import "./fonts/fonts.css"
 import { Provider } from "react-redux";
 import reducers from "./reducer"
 import thunk from "redux-thunk";

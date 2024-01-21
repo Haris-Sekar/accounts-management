@@ -115,6 +115,38 @@
     .cusNavbar .profile .expand{
         display: none;
     }
+    .customerDetailPageTable {
+        max-width: 700px;
+    }
 
 }
 
+@media only screen and (max-width: 500px) {
+    .cusNavbar .companyDets {
+        font-size: 25px;
+    }
+    .cusNavbar {
+        font-size: 13px;
+    }
+    .cusNavbar .navItems { 
+        flex-direction: column;
+        gap: 12px;
+    }
+    .cusNavbar .navItems a {
+        padding: 0;
+    }
+    .cusNavbar .profile .avatar{
+        display: none;
+    }
+
+    .cusNavbar .profile .userDetails {
+        display: none;
+    }
+    .cusNavbar .profile .expand{
+        display: none;
+    }
+    .customerDetailPageTable {
+        max-width: 400px;
+    }
+    
+}

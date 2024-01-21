@@ -56,21 +56,21 @@ const Customers = () => {
       label: "Total Bill Count",
       minWidth: 170,
       align: "right",
-      format: (value: number) => value.toLocaleString("en-US"),
+      format: (value: number) => value.toLocaleString("en-IN"),
     },
     {
       id: "totalPurchase",
       label: "Total Purchased Amount",
       minWidth: 170,
       align: "right",
-      format: (value: number) => '₹ ' + value.toLocaleString("en-US") + ' /-',
+      format: (value: number) => '₹ ' + value.toLocaleString("en-IN") + ' /-',
     },
     {
       id: "balance",
       label: "Balance",
       minWidth: 170,
       align: "right",
-      format: (value: number) => '₹ ' + value.toLocaleString("en-US") + ' /-',
+      format: (value: number) => '₹ ' + value.toLocaleString("en-IN") + ' /-',
     },
   ];
 

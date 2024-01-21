@@ -7,6 +7,7 @@ import Customers from "./Customers/Customers";
 import Bills from "./Bills/Bills";
 import Voucher from "./Voucher/Voucher";
 import CustomerDetailPage from "./Customers/CustomerDetailPage";
+import CustomerDetailExport from "./Customers/CustomerDetailExport";
 
 const Pages = () => {
   const navigate = useNavigate();
@@ -25,8 +26,8 @@ const Pages = () => {
         <Route path="/app/customers/:id" element={<CustomerDetailPage />} />
         <Route path="/app/bills" element={<Bills />} />
         <Route path="/app/voucher" element={<Voucher />} />
-
       </Route>
+      <Route path="/app/customers/:id/exportTransaction" element={<CustomerDetailExport />} />
 
     </Routes>
   );

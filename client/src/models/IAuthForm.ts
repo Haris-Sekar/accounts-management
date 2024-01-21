@@ -9,3 +9,11 @@ export interface ILogin {
     email: string;
     password: string;
 }
+
+
+export interface IResponseData {
+    code: number;
+    message: string;
+    jwt_token: string;
+    companies: string;
+}

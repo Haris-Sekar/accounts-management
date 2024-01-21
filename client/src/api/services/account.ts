@@ -1,4 +1,5 @@
-import { IAuthForm, ILogin } from "../../models/IAuthForm";
+import { AxiosError } from "axios";
+import { IAuthForm, ILogin, IResponseData } from "../../models/IAuthForm";
 import { API } from "../axios";
 import { toast } from "react-toastify";
 
@@ -11,7 +12,9 @@ async function register(data: IAuthForm) {
             }
         }, error: {
             render({data}) {
-                return data.response.data.message;
+                const axioserror = data as AxiosError;
+                const reqError = axioserror.response?.data as IResponseData; 
+                return reqError.message;
             }
         }, success: {
             render() {
@@ -25,7 +28,9 @@ async function login(data: ILogin) {
     return toast.promise(API.post(`user/login`, data), {
         error: {
             render({data}) {
-                return data.response.data.message;
+                const axioserror = data as AxiosError;
+                const reqError = axioserror.response?.data as IResponseData; 
+                return reqError.message;
             }
         },
         pending: {

@@ -1,3 +1,5 @@
+import { Moment } from "moment";
+
 export interface IVoucherDetails {
     _id: string;
     customerName: string;
@@ -12,7 +14,7 @@ export interface IVoucherDetails {
 export interface IAddVoucherFrom {
     customerId: string;
     amount: number;
-    date: number;
+    date: number | Moment;
     isCheque: boolean;
     chequeNumber: number;
     isChequeCredited: boolean;

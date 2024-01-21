@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
   Autocomplete,
   Box,
@@ -45,7 +47,7 @@ const AddBills = ({
   } = useForm<IBillAddForm>();
   const onSubmit = (e: IBillAddForm) => {
     e.billDate = e.billDate as Moment;
-    e.billDate = e.billDate.format('x');
+    e.billDate = Number(e.billDate.format('x'));
     if (editValues && editValues?._id !== undefined) {
       updateBill(e, editValues._id)
         .then(() => {

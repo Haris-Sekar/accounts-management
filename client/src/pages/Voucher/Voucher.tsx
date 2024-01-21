@@ -1,20 +1,20 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { IBillDetails } from "../../models/IAddBillForm";
 import { Backdrop, Box, Fade, Modal, Paper, SpeedDial, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from "@mui/material";
 import { Add, Delete, Edit } from "@mui/icons-material";
-import { getBills, getVouchers } from "../../action/action";
-import AddBills from "./AddVoucher";
+import { getVouchers } from "../../action/action";
 import DialogBox from "../../components/Dialog/DialogBox";
 import { IDialogBox } from "../../models/IComponents";
-import { deleteBill } from "../../api/services/billls";
 import { toast } from "react-toastify";
 import { IVoucherDetails } from "../../models/IAddVoucherForm";
 import AddVoucher from "./AddVoucher";
+import { deleteVoucher } from "../../api/services/voucher";
 
 const style = {
-  position: "absolute" as "absolute",
+  position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
@@ -43,7 +43,7 @@ const Voucher = () => {
       label: "Voucher Amount",
       minWidth: 170,
       align: "right",
-      format: (value: number) => value.toLocaleString("en-US"),
+      format: (value: number) => value.toLocaleString("en-IN"),
     }, {
       id: "date",
       label: "Date",
@@ -74,9 +74,9 @@ const Voucher = () => {
     customerName: string;
     amount: number;
     date: number;
-    isCheque: boolean;
+    isCheque: string;
     chequeNumber: number;
-    isChequeCredited: boolean;
+    isChequeCredited: string;
     bankName: string
   }
   function createData(
@@ -89,10 +89,10 @@ const Voucher = () => {
     isChequeCredited: boolean,
     bankName: string
   ): Data {
-    return { id: id, customerName: customerName, amount: amount, date: date, isCheque: isCheque, chequeNumber: chequeNumber, isChequeCredited: isChequeCredited, bankName: bankName };
+    return { id: id, customerName: customerName, amount: amount, date: date, isCheque: String(isCheque), chequeNumber: chequeNumber ?? '-' , isChequeCredited: String(isChequeCredited), bankName: bankName ?? "-" };
   }
 
-  let rows: Data[] = [];
+  const rows: Data[] = [];
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -117,7 +117,7 @@ const Voucher = () => {
   useEffect(() => {
     //@ts-ignore
     dispatch(getVouchers(null));
-  }, [navigate]);
+  }, [dispatch, navigate]);
 
   const { vouchers } = useSelector(
     (state: any) => state.voucherReducer
@@ -158,9 +158,9 @@ const Voucher = () => {
     setDeleteDialogOpen(true);
   }
   function deleteSuccessCallback(_e: any, id: string) {
-    deleteBill(id).then(() => {
+    deleteVoucher(id).then(() => {
       //@ts-ignore
-      dispatch(getBills(null));
+      dispatch(getVouchers(null));
       setDeleteDialogOpen(false);
     }).catch((e) => {
       toast.error(e?.message);

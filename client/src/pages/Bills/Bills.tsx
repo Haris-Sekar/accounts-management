@@ -49,7 +49,7 @@ const Bills = () => {
       label: "Bill Amount",
       minWidth: 170,
       align: "right",
-      format: (value: number) => value.toLocaleString("en-US"),
+      format: (value: number) => value.toLocaleString("en-IN"),
     }
   ];
 

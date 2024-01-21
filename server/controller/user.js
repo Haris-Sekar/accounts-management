@@ -1,7 +1,8 @@
 import bcrypt from "bcrypt";
 import user from "../model/user.js";
 import { fieldValidationError, serverError } from "../consts/APIMessage.js";
-import { USER_TYPE } from "../consts/const.js";
+import userPermissions from "../model/userPermission.js";
+import {DEFAULT_PERMISSION} from "../consts/permission.js";
 export const login = async (req, res) => {
     let response, code;
     loginTry: try {
@@ -49,8 +50,8 @@ export const login = async (req, res) => {
 export const signup = async (req, res) => {
     let response, code;
     signupTry: try {
-        const { name, email, password, confirmPassword } = req.body;
-        const errorFields = fieldValidationError([`name`, `email`, `password`, `confirmPassword`], req.body);
+        const { name, email, password, confirmPassword, userType } = req.body;
+        const errorFields = fieldValidationError([`name`, `email`, `password`, `confirmPassword`, `userType`], req.body);
         if(errorFields !== null && errorFields !== undefined) {
             response = errorFields;
             code = 403;
@@ -61,7 +62,7 @@ export const signup = async (req, res) => {
             name,
             email,
             password,
-            userType: USER_TYPE.ADMIN,
+            userType,
         });
         if (password.localeCompare(confirmPassword)) {
             response = {
@@ -83,7 +84,14 @@ export const signup = async (req, res) => {
             break signupTry;
         }
         const result = await newUser.save();
+        
         if (result) {
+            const userPermission = new userPermissions({
+                userId: result._id,
+                userType: result.userType,
+                permission: DEFAULT_PERMISSION.find((perm) => perm.userType === result.userType),
+            });
+            await userPermission.save();
             response = {
                 message: "User created!",
                 status: 200,
@@ -110,9 +118,10 @@ export const getUserDetails = async (req, res) => {
         }
 
         const userDetails = user.findOne({ _id: id });
-
+        const permissions = userPermissions.findOne({userId: id})
         response = {
             userDetails,
+            permissions,
             message: "user details fetched successfully",
             code: 200
         };

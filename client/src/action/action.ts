@@ -1,13 +1,18 @@
 import { toast } from "react-toastify"
 import { API } from "../api/axios";
-import { GET_CUSTOMERS, LOADING, GET_BILLS, GET_VOUCHERS } from "../consts/actionTypes";
+import { GET_CUSTOMERS, LOADING, GET_BILLS, GET_VOUCHERS, GET_CUSTOMER } from "../consts/actionTypes";
 
 export const getCustomers = (id: string | null) => async (dispatch: Function) => {
     try {
         dispatch({ type: LOADING, data: true });
         const url = id !== null && id !== undefined ? `customers/${id}` : `/customers`;
         const { data } = await API.get(url);
-        dispatch({ type: GET_CUSTOMERS, data });
+        if(id && id.length > 0) {
+            dispatch({ type: GET_CUSTOMER, data });
+        } else {
+            dispatch({ type: GET_CUSTOMERS, data });
+        }
+        
     } catch (error: any) {
         toast.error(error);
     }

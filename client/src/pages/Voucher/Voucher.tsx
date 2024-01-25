@@ -270,6 +270,7 @@ const Voucher = () => {
           setIsSearch(false);
           setSearchResult([]);
           setSearchType(Number(e.currentTarget.value));
+          //@ts-ignore
           document.getElementById("searchQueryInput").value = "";
         }}
         searchSelectItems={searchSelectItems}

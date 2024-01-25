@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Moment } from "moment"
 
 export interface IBillDetails {
-    gData(_id: string, customerName: string, billNumber: number, billDate: number, amount: number, gData: any): Data
+    gData: any;
     _id: string,
     customerName: string,
     billNumber: number,

@@ -18,6 +18,9 @@ const bill = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    gFileId: {
+        type: String,
+    },
     userId: {
         type: mongoose.Schema.ObjectId,
         ref: 'user',

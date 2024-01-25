@@ -100,4 +100,15 @@ export const checkPermission = async (req, res, next) => {
   }
 };
 
+export async function authorizeDriveAPI() {
+  const jwtClient = new google.auth.JWT(
+    pkey.client_email,
+    null,
+    pkey.private_key,
+    SCOPES
+  )
+  await jwtClient.authorize();
+  return jwtClient;
+}
+
 export default authendicateUser;

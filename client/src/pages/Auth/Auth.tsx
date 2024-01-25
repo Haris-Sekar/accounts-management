@@ -53,7 +53,7 @@ const Auth = () => {
         });
     } else {
       login({ email: e.email, password: e.password }).then(() => {
-        navigate('/app');
+        navigate('/app?from=auth');
         reset(initialValues);
       }).catch((err) => {
         toast.error(err);

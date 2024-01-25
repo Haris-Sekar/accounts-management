@@ -9,7 +9,7 @@ export const serverError = (error) => {
 export const fieldValidationError = (fields, params) => {
     let errorFields = [];
     fields.forEach((field) => {
-        if(!params.hasOwnProperty(field)) {
+        if(!Object.keys(params).includes(field)) {
             errorFields.push(field);
         }
     });

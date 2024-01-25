@@ -11,17 +11,17 @@
     align-items: center;
 }
 
-.cusNavbar .navItems .searchBar {
+.searchBar {
     width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.cusNavbar .navItems #searchQueryInput {
+#searchQueryInput {
     width: 100%;
     height: 2.5rem;
-    background: #f5f5f5;
+    background: #e6e4e4;
     outline: none;
     border: none;
     border-radius: 1.625rem;
@@ -31,7 +31,7 @@
     
 }
 
-.cusNavbar .navItems #searchQuerySubmit {
+#searchQuerySubmit {
     width: 3.0rem;
     height: 2.5rem;
     margin-left: -3.5rem;
@@ -40,7 +40,7 @@
     outline: none;
 }
 
-.cusNavbar .navItems #searchQuerySubmit:hover {
+#searchQuerySubmit:hover {
     cursor: pointer;
 }
 
@@ -156,4 +156,14 @@
         max-width: 400px;
     }
     
+}
+
+.customSelect {
+    padding: 0.5%;
+    border-radius: 20px;
+    width: 15%;
+    text-align: center;
+    margin-right: 1%;
+    max-width: 150px;
+    min-width: fit-content;
 }

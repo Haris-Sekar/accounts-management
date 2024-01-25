@@ -1,0 +1,13 @@
+{
+    "type": "service_account",
+    "project_id": "avsenterprises-412217",
+    "private_key_id": "dd4b19b31e147e02a79a4e819d1dfb420e5a574d",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDhlBkJMjY1CKtd\n39sNPlZXhdSA5ra9Vt5BMsJnHBbQk7KIoBbFvPzmFLPh77KMgLj919Sngn7zXjHU\nDevYj5tTUbdrFl2SojRl0wVM1/A1zR2ZIQHfg2/Ja6aO+6OWNbvIrb7A3ihD1KjK\n6VvDh3cj7TS204chhqlSmrS9MqQQDVGB7/8plrEK2UTdyCDTY1nrgAhv7hxlJz4B\nV42nhGhLcQPrGA6UB8VsDmRb4WMntTqeM2H/7fLsYyjpwPaUu3ct8ZPnskSBcxzN\n9uUUXGzvdkbOQzvzT10LG3ARSMRqDusPxgsBpqDoHm7aG43fTElshDOq8bRvHkAc\nZRfj1IZ5AgMBAAECggEAFbKjnTAAaSXY1Jzu2pLCRlqVSq171Vww4QTrZcnyDdpZ\nxBeLU+DY/fPu1jmIAJ4fF9egrljN3PCUtWjTZI9yVCzaNN7qsus5mV5stkFXwIJm\n1ERfBECwdNI51qtbcbGLIFifWQ46wZoyfuC8bA3bMWWkej4q04LlmuWjo0aRjl4z\nRK8N5l00rihPCCOezMVFR7WRwMvWPsAwrYHJzBmtMzdeg4FduZvfNMFYdeQ2xy+0\nDhBXOm+lZP4g1bXKj1AA6eJn2Wzm67Q8mDeIgXrRXLv/wezfEyn4xw7c2buNZwNi\nSB9W8OupXiFDMxkvnqJYu4Ox+a5NAyRK4EXVNKvzOwKBgQD/0MFZxARAj+PwHlHh\n+0xnYNXhlRu8aT1cXqHF8BNpsAEZdJ70Uf3MJgiA+Iab0UPULK7mV7fCsF94Mskw\nOYPzjGAYDCY2Xwuys+RHycgGEUCIlGFyN9jBHeoUcBim4fz7xA44K+drtwJZ8Ck7\nzXb1+nTbVtocB9egF8OrEpfHMwKBgQDhvcIeYL3soZss6wz/9PQwlo5XknpRGMpD\nMZCMbGUQMhydb+RuygSwOWCp4ZWYfba7eGl1Z8grL7Vmm47ArGaenwRmtpvRdxcV\nBMEBhEz9CSJAILEQAb6BTG58nWNYrzTokViahLEHpjC+5L8Px+IrxKu6hbFuuCi3\nBWg/K9iLowKBgQC1LdTDDuE0GLUHS3IS6zihvyO8MS8DskWTNjK9Tdtx7wXYUZCC\n2c8213kOXvZ3RS8VBtCYs2eiq+fx6YY0cYfS5ojofzJRL9/JIT982JyiL3XVRcH+\ncy9BFz7CWuIaz9OtPJ4VioLM90DjEgUiJdMrQ8ef0VOIpsVAzZP3haOZoQKBgCEs\ngL10HBUNPr+gHz3yInyNc4edCAqo6Phs7UAloch6hMgCLIC3gW7gT7tHYnORbewo\n6t6NDNaD4VWd4KGh9Ea1ObFafpWOub6l/zMY3TOGRxlDdKHUj8lykP4RJwteXBkd\nWvcCLv3fx2QWO5m3Fx61fUMg6I1L1PfofIRkDiOfAoGBAKKLnSO+3u6UNWlb2CkG\n717TKPFaFH/1aIKbzWvztttRLFxgjnoBfq1yW0jalREXekZSCczVSzyikh7vJA+e\n6UYtpuLKHM1B6ErEbCrSS5edAaf0xMkTUbnuumGvm6RFiPTGpnCSda8mQl77GGxS\nrxMnrhLaiI1TypLhc27oWtNI\n-----END PRIVATE KEY-----\n",
+    "client_email": "avsenterprises@avsenterprises-412217.iam.gserviceaccount.com",
+    "client_id": "103570677036336813044",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/avsenterprises%40avsenterprises-412217.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+  }

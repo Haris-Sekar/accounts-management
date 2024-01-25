@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Add, Delete, Edit } from "@mui/icons-material";
 import {
   Backdrop,
@@ -15,7 +17,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AddCustomer from "./AddCustomer";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,8 +26,9 @@ import { ICustomerDetails } from "../../models/IAddCustomerForm";
 import DialogBox from "../../components/Dialog/DialogBox";
 import { IDialogBox } from "../../models/IComponents";
 import { deleteCustomer } from "../../api/services/customers";
+import SearchBar from "../../components/Navbar/SearchBar";
 const style = {
-  position: "absolute" as "absolute",
+  position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
@@ -63,14 +66,14 @@ const Customers = () => {
       label: "Total Purchased Amount",
       minWidth: 170,
       align: "right",
-      format: (value: number) => '₹ ' + value.toLocaleString("en-IN") + ' /-',
+      format: (value: number) => "₹ " + value.toLocaleString("en-IN") + " /-",
     },
     {
       id: "balance",
       label: "Balance",
       minWidth: 170,
       align: "right",
-      format: (value: number) => '₹ ' + value.toLocaleString("en-IN") + ' /-',
+      format: (value: number) => "₹ " + value.toLocaleString("en-IN") + " /-",
     },
   ];
 
@@ -94,7 +97,7 @@ const Customers = () => {
     return { id, customerName, area, totalBill, totalPurchase, balance };
   }
 
-  let rows: Data[] = [];
+  const rows: Data[] = [];
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -118,18 +121,16 @@ const Customers = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     console.log("asdf");
-    
+
     setEditValues(undefined);
-    setOpen(false)
+    setOpen(false);
   };
   useEffect(() => {
     //@ts-ignore
     dispatch(getCustomers(null));
-  }, [navigate]);
+  }, [dispatch, navigate]);
 
-  const { customers } = useSelector(
-    (state: any) => state.customerReducer
-  );
+  const { customers } = useSelector((state: any) => state.customerReducer);
 
   if (customers !== undefined) {
     customers.forEach((customer: ICustomerDetails) => {
@@ -146,20 +147,38 @@ const Customers = () => {
     });
   }
 
-  function editComponent(id: any) { return (<span style={{cursor: 'pointer'}} id={id} onClick={handleEdit}><Edit /></span>) }
-  const deleteComponent = (id: string | undefined) => (<span id={id} style={{cursor: 'pointer'}} onClick={handleDelete}><Delete /></span>)
+  function editComponent(id: any) {
+    return (
+      <span id={id} onClick={handleEdit} style={{color: '#2196f3'}}>
+        <Edit />
+      </span>
+    );
+  }
+  const deleteComponent = (id: string | undefined) => (
+    <span id={id} onClick={handleDelete} style={{color: "#FF4244"}}>
+      <Delete />
+    </span>
+  );
   function handleEdit(_e: any) {
-    const data = customers.filter((customer: ICustomerDetails) => customer._id === _e.currentTarget.id)[0];
-    setEditValues(data)
+    const data = customers.filter(
+      (customer: ICustomerDetails) => customer._id === _e.currentTarget.id
+    )[0];
+    setEditValues(data);
     setOpen(true);
   }
   function handleDelete(e: any) {
     setDialogDetails({
       title: "Confirm Delete customer",
-      description: (<Typography>Deleting customer will delete all the <b>bills</b> and <b>vouchers</b> associated with this customer, <br /><b>Do you want to delete?</b></Typography>),
+      description: (
+        <Typography>
+          Deleting customer will delete all the <b>bills</b> and <b>vouchers</b>{" "}
+          associated with this customer, <br />
+          <b>Do you want to delete?</b>
+        </Typography>
+      ),
       id: e.currentTarget.id,
       successBtnText: "Delete",
-      failureBtnText: "Cancel"
+      failureBtnText: "Cancel",
     });
     setDeleteDialogOpen(true);
   }
@@ -168,22 +187,60 @@ const Customers = () => {
       //@ts-ignore
       dispatch(getCustomers(null));
       setDeleteDialogOpen(false);
-    })
-
-
+    });
   }
 
   const [deleteDialogOpen, setDeleteDialogOpen] = React.useState(false);
   const [dialogDetails, setDialogDetails] = React.useState<IDialogBox>({
     title: "",
-    description: (<Typography />),
+    description: <Typography />,
     id: "",
     successBtnText: "",
-    failureBtnText: ""
+    failureBtnText: "",
   });
+
+  const [isSearch, setIsSearch] = useState(false);
+  const [searchResult, setSearchResult] = useState<Data[]>([]);
+  const [searchType, setSearchType] = useState<number>(1);
+  const searchSelectItems = [
+    {
+      name: "Customer",
+      value: 1,
+      function: (row: { customerName: string }, searchTerm: any) =>
+        row.customerName.toLowerCase().includes(searchTerm),
+    },
+    {
+      name: "Area",
+      value: 2,
+      function: (row: { area: string }, searchTerm: any) =>
+        row.area.toLowerCase().includes(searchTerm),
+    },
+  ];
+
+  const searchOnChange = (e: { currentTarget: { value: any } }) => {
+    const searchTerm = String(e.currentTarget.value).toLowerCase();
+    if (searchTerm.length > 0) {
+      setIsSearch(true);
+      const func = searchSelectItems.find((item) => item.value === searchType);
+      setSearchResult(rows.filter((row) => func?.function(row, searchTerm)));
+    } else {
+      setIsSearch(false);
+      setSearchResult([]);
+    }
+  };
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden", padding: "2%" }}>
+      <SearchBar
+        onChangeFunc={searchOnChange}
+        selectOnChange={(e: { currentTarget: { value: any } }) => {
+          setIsSearch(false);
+          setSearchResult([]);
+          setSearchType(Number(e.currentTarget.value));
+          document.getElementById('searchQueryInput').value = "";
+        }}
+        searchSelectItems={searchSelectItems}
+      />
       <DialogBox
         dialogDetails={dialogDetails}
         successCallBack={deleteSuccessCallback}
@@ -212,12 +269,43 @@ const Customers = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-
-            {customers &&
-              customers.length > 0 &&
-              rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
+            {customers && customers.length > 0 && !isSearch
+              ? rows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => {
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.id}
+                        id={row.id}
+                        onClick={handleCustomerClick}
+                      >
+                        {columns.map((column) => {
+                          const value = row[column.id];
+                          return (
+                            <TableCell
+                              key={column.id}
+                              align={column.align}
+                              id={row.id}
+                            >
+                              {column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
+                            </TableCell>
+                          );
+                        })}
+                        <TableCell key="edit" align="right" id={row.id}>
+                          {editComponent(row.id)}
+                        </TableCell>
+                        <TableCell key="delete" align="right" id={row.id}>
+                          {deleteComponent(row.id)}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
+              : searchResult.map((row) => {
                   return (
                     <TableRow
                       hover
@@ -230,7 +318,11 @@ const Customers = () => {
                       {columns.map((column) => {
                         const value = row[column.id];
                         return (
-                          <TableCell key={column.id} align={column.align} id={row.id}>
+                          <TableCell
+                            key={column.id}
+                            align={column.align}
+                            id={row.id}
+                          >
                             {column.format && typeof value === "number"
                               ? column.format(value)
                               : value}
@@ -279,7 +371,10 @@ const Customers = () => {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <AddCustomer handleClose={handleClose} editValues={editValues as ICustomerDetails} />
+            <AddCustomer
+              handleClose={handleClose}
+              editValues={editValues as ICustomerDetails}
+            />
           </Box>
         </Fade>
       </Modal>

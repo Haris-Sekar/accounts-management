@@ -18,49 +18,13 @@ import user from "./routes/user.js";
 import customer from "./routes/customer.js";
 import bill from "./routes/bills.js";
 import voucher from "./routes/voucher.js";
-import dashboard from "./routes/dashboard.js";
-import { createReadStream } from "fs";
-import { google } from "googleapis";
-import process from "process";
-import path from "path";
-
-const SCOPES = ['https://www.googleapis.com/auth/drive.file'];
-
-async function authorize() {
-  const jwtClient = new google.auth.JWT(
-    pkey.client_email,
-    null,
-    pkey.private_key,
-    SCOPES
-  )
-  await jwtClient.authorize();
-  return jwtClient;
-}
-
-async function uploadFile(authClient) {
-  const drive = google.drive({ version: 'v3', auth: authClient });
-
-    const file = await drive.files.create({
-      media: {
-        body: createReadStream('./pk.json')
-      },
-      fields: 'id',
-      requestBody: {
-        name: path.basename('./pk.json'),
-        parents: ["1CkUNlZn17Aqa-ziWQMNlvlTeQz6DicJw"]
-      },
-    });
-    console.log(file.data.id)
-}
-
+import dashboard from "./routes/dashboard.js"; 
+import process from "process"; 
 app.use(`/api/v1/user`, user);
 app.use(`/api/v1/customers`, customer);
 app.use(`/api/v1/bills`, bill);
 app.use(`/api/v1/voucher`, voucher);
 app.use(`/api/v1/dashboard`, dashboard);
-app.use('/', async (req, res) => {
-  authorize().then(uploadFile).catch(console.error)
-})
 
 const port = process.env.PORT || 5001;
 mongoose

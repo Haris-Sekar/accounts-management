@@ -33,6 +33,7 @@ export const addCustomer = async (req, res) => {
       code = 201;
       response = {
         message: `Customer created`,
+        customer: result,
         code: 201,
       };
     }

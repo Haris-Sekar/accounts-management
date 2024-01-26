@@ -23,7 +23,7 @@ export const addCustomer = async (req, res) => {
       customerName,
       phoneNumber,
       area,
-      balance,
+      balance: balance ? balance : 0,
       userId: req.id
     });
 

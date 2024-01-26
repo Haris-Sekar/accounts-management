@@ -1,10 +1,11 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
 import { useEffect } from "react";
+import { Analytics } from '@vercel/analytics/react';
+
 const PageLayout = () => {
 
   const userDetails = JSON.parse(localStorage.getItem("user_details") as string);
-
   const navigate = useNavigate(); 
   const a = useLocation();
 
@@ -20,6 +21,7 @@ const PageLayout = () => {
 
   return (
     <div>
+      <Analytics />
       <Navbar userDetails={userDetails} />
       <div className="main">
         <Outlet />

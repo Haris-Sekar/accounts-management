@@ -7,7 +7,6 @@ const customer = new mongoose.Schema({
   },
   phoneNumber: {
     type: Number,
-    unique: true,
     require: true,
   },
   area: {

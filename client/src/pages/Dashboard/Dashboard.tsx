@@ -45,7 +45,7 @@ const Dashboard = () => {
         };
     }
 
-    if (dashboardDetails && dashboardDetails?.totalBillAmount) {
+    if (dashboardDetails && dashboardDetails.hasOwnProperty('totalBillAmount')) {
         cardContents = [
             {
                 cardName: "Total Customers",
@@ -83,6 +83,9 @@ const Dashboard = () => {
     }
 
     const [hide, setHide] = useState(true);
+
+    console.log(cardContents);
+    
 
     return (
         <>

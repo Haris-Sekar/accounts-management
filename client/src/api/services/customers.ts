@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { API } from "../axios";
+import { API, unauthorizedAccess } from "../axios";
 import { IAddCustomerForm } from "../../models/IAddCustomerForm"; 
 
 async function addCustomers(data: IAddCustomerForm) { 
@@ -19,6 +19,8 @@ async function addCustomers(data: IAddCustomerForm) {
         },
         error: {
             render({ data }) {
+                //@ts-ignore
+                unauthorizedAccess(data?.response?.data);
                 //@ts-ignore
                 return data?.response?.data.message;
             }
@@ -43,6 +45,8 @@ async function updateCustomers(data: IAddCustomerForm, id: string) {
         error: {
             render({ data }) {
                 //@ts-ignore
+                unauthorizedAccess(data?.response?.data);
+                //@ts-ignore
                 return data?.response?.data.message;
             }
         }
@@ -65,6 +69,8 @@ async function deleteCustomer(id: string) {
         },
         error: {
             render({ data }) {
+                //@ts-ignore
+                unauthorizedAccess(data?.response?.data);
                 //@ts-ignore
                 return data?.response?.data.message;
             }

@@ -7,14 +7,16 @@ import { USER_TYPE } from "../../consts/consts";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-const Navbar = ({ userDetails }: {userDetails: any}) => {
+const Navbar = ({ userDetails, companyDetails }: {userDetails: any, companyDetails: any}) => {
   const [anchorE2, setAnchorE2] = useState(null);
   const openMenu2 = Boolean(anchorE2);
-  const profileItems = ['Logout']; // Add more profile menu options here
+  const profileItems = ['Users','Logout']; // Add more profile menu options here
   const handleProfileMenuClose = (e: any) => {
-    if (e.target.id === profileItems[0]) {
+    if (e.target.id === profileItems[1]) {
       logout();
       setAnchorE2(null)
+    } else if(e.target.id === profileItems[0]) {
+      navigate('/app/users')
     }
     setAnchorE2(null)
   };
@@ -34,7 +36,7 @@ const Navbar = ({ userDetails }: {userDetails: any}) => {
     <>
       <div className="cusNavbar">
         <div className="navItems">
-          <div className="companyDets" onClick={() => navigate('/app')}>AVS ENTERPRISES</div>
+          <div className="companyDets" onClick={() => navigate('/app')}>{companyDetails?.name}</div>
           <div className="serachBar">
             {/* <SearchBar /> */}
             <Link

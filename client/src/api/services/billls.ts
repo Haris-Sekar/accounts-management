@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { IBillAddForm } from "../../models/IAddBillForm";
-import { API } from "../axios";
+import { API, unauthorizedAccess } from "../axios";
 
 async function addBills(data: IBillAddForm) {
     return toast.promise(API.post(`/bills`, data), {
@@ -18,6 +18,8 @@ async function addBills(data: IBillAddForm) {
         },
         error: {
             render({ data }) {
+                //@ts-ignore
+                unauthorizedAccess(data?.response?.data);
                 //@ts-ignore
                 return data?.response?.data.message;
             }
@@ -42,6 +44,8 @@ async function updateBill(data: IBillAddForm, id: string) {
         error: {
             render({ data }) {
                 //@ts-ignore
+                unauthorizedAccess(data?.response?.data);
+                //@ts-ignore
                 return data?.response?.data.message;
             }
         }
@@ -65,6 +69,8 @@ async function deleteBill(id: string) {
         },
         error: {
             render({ data }) {
+                //@ts-ignore
+                unauthorizedAccess(data?.response?.data);
                 //@ts-ignore
                 return data?.response?.data.message;
             }

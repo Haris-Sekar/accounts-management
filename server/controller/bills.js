@@ -17,7 +17,7 @@ export const addBill = async (req, res) => {
   addBilTry: try {
     const { billNo, billDate, customerId, amount } = req.body;
     const { file } = req;
-    let fileId = ""; 
+    let fileId = "";  
     if (file) {
       const { data } = await google
         .drive({ version: "v3", auth: auth })
@@ -58,16 +58,12 @@ export const addBill = async (req, res) => {
 
     const result = await newBill.save();
 
-    const data = await google
-      .drive({ version: "v3", auth: auth })
-      .files.get({ fileId, alt: "media" });
-
     if (result) {
       code = 201;
       response = {
         message: `New Bill has been added`,
         code: 201,
-        data,
+        bill: newBill
       };
     }
   } catch (error) {

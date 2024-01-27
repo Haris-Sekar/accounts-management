@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 import { IAuthForm, ILogin, IResponseData } from "../../models/IAuthForm";
-import { API } from "../axios";
+import { API, unauthorizedAccess } from "../axios";
 import { toast } from "react-toastify";
 
 async function register(data: IAuthForm) {
@@ -14,6 +14,7 @@ async function register(data: IAuthForm) {
             render({data}) {
                 const axioserror = data as AxiosError;
                 const reqError = axioserror.response?.data as IResponseData; 
+                unauthorizedAccess(reqError);
                 return reqError.message;
             }
         }, success: {
@@ -30,6 +31,7 @@ async function login(data: ILogin) {
             render({data}) {
                 const axioserror = data as AxiosError;
                 const reqError = axioserror.response?.data as IResponseData; 
+                unauthorizedAccess(reqError);
                 return reqError.message;
             }
         },
@@ -43,6 +45,7 @@ async function login(data: ILogin) {
                 const resp = data?.data;
                 localStorage.setItem(`user_details`, JSON.stringify(resp.user_details));
                 localStorage.setItem(`token`, resp.jwt_token);
+                localStorage.setItem(`company_details`, JSON.stringify(resp.company_details))
                 return `Login success`
             }
         }

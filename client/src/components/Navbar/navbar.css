@@ -111,19 +111,12 @@
     }
     .cusNavbar .navItems a {
         padding: 0;
-    }
-    .cusNavbar .profile .avatar{
-        display: none;
-    }
-
-    .cusNavbar .profile .userDetails {
-        display: none;
-    }
-    .cusNavbar .profile .expand{
-        display: none;
-    }
+    } 
     .customerDetailPageTable {
         max-width: 700px;
+    }
+    .profile {
+        margin: 4% 0;
     }
 
 }
@@ -141,17 +134,7 @@
     }
     .cusNavbar .navItems a {
         padding: 0;
-    }
-    .cusNavbar .profile .avatar{
-        display: none;
-    }
-
-    .cusNavbar .profile .userDetails {
-        display: none;
-    }
-    .cusNavbar .profile .expand{
-        display: none;
-    }
+    } 
     .customerDetailPageTable {
         max-width: 400px;
     }

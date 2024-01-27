@@ -19,6 +19,8 @@ async function addVoucher(data: IAddVoucherFrom) {
         error: {
             render({ data }) {
                 //@ts-ignore
+                unauthorizedAccess(data?.response?.data);
+                //@ts-ignore
                 return data?.response?.data.message;
             }
         }
@@ -41,6 +43,8 @@ async function updateVoucher(data: IAddVoucherFrom, id: string) {
         },
         error: {
             render({ data }) {
+                //@ts-ignore
+                unauthorizedAccess(data?.response?.data);
                 //@ts-ignore
                 return data?.response?.data.message;
             }
@@ -65,6 +69,8 @@ async function deleteVoucher(id: string) {
         },
         error: {
             render({ data }) {
+                //@ts-ignore
+                unauthorizedAccess(data?.response?.data);
                 //@ts-ignore
                 return data?.response?.data.message;
             }

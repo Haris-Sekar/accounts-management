@@ -13,6 +13,11 @@ const apis = [
     module: MODULES.USER,
   },
   {
+    path: "/user/addUser",
+    method: [API_METHODS.POST],
+    module: MODULES.USER
+  },
+  {
     path: "/customers",
     method: [
       API_METHODS.GET,
@@ -29,6 +34,13 @@ const apis = [
       API_METHODS.POST,
       API_METHODS.PATCH,
       API_METHODS.DELETE,
+    ],
+    module: MODULES.BILLS,
+  },
+  {
+    path: "/bills/withoutpdf",
+    method: [ 
+      API_METHODS.POST, 
     ],
     module: MODULES.BILLS,
   },

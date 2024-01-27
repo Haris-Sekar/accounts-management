@@ -3,6 +3,7 @@ import user from "../model/user.js";
 import jwt from "jsonwebtoken";
 import userPermission from "../model/userPermission.js";
 import apis, { API_METHODS } from "../consts/apiConfig.js";
+import company from "../model/company.js";
 
 const authendicateUser = async (req, res, next) => {
   let code, response;
@@ -23,8 +24,28 @@ const authendicateUser = async (req, res, next) => {
     const authJson = jwt.decode(token, process.env.PRIVATEKEY);
 
     const user1 = await user.findOne({ _id: authJson.id });
+    if (!user1) {
+      code = 401;
+      response = {
+        code: 401,
+        message: `Unauthorized Access`,
+      };
+      res.status(code).json(response);
+      break authendicateUserTry;
+    }
 
     if (user1.email === authJson.email) {
+      const companyDetails = await company.findOne({ userId: user1._id });
+      if (!companyDetails) {
+        code = 401;
+        response = {
+          code: 401,
+          message: `Unauthorized Access`,
+        };
+        res.status(code).json(response);
+        break authendicateUserTry;
+      }
+      req.companyId = companyDetails._id;
       req.id = user1._id;
       req.email = user1.email;
       next();
@@ -47,7 +68,6 @@ export const checkPermission = async (req, res, next) => {
   let code, response;
   checkPermissionTry: try {
     const permission = await userPermission.findOne({ userId: req.id });
-    console.log();
     let baseUrl = req.baseUrl.replace("/api/v1", "");
     let method = req.route.stack[0].method;
     let module = undefined;
@@ -74,11 +94,10 @@ export const checkPermission = async (req, res, next) => {
       code: 401,
     };
 
-
     const modulePermission = permission.permission[0].permissions.find(
       (perm) => perm.module === module
     );
-    
+
     if (method === API_METHODS.GET && modulePermission.permission[0]) {
       next();
     } else if (method === API_METHODS.POST && modulePermission.permission[1]) {
@@ -106,7 +125,7 @@ export async function authorizeDriveAPI() {
     null,
     pkey.private_key,
     SCOPES
-  )
+  );
   await jwtClient.authorize();
   return jwtClient;
 }

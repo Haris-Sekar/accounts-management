@@ -6,6 +6,7 @@ import { Analytics } from '@vercel/analytics/react';
 const PageLayout = () => {
 
   const userDetails = JSON.parse(localStorage.getItem("user_details") as string);
+  const companyDetails = JSON.parse(localStorage.getItem("company_details") as string);
   const navigate = useNavigate(); 
   const a = useLocation();
 
@@ -22,7 +23,7 @@ const PageLayout = () => {
   return (
     <div>
       <Analytics />
-      <Navbar userDetails={userDetails} />
+      <Navbar userDetails={userDetails} companyDetails={companyDetails} />
       <div className="main">
         <Outlet />
       </div>

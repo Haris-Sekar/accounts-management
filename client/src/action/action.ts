@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { toast } from "react-toastify";
-import { API } from "../api/axios";
+import { API, unauthorizedAccess } from "../api/axios";
 import {
   GET_CUSTOMERS,
   LOADING,
@@ -9,6 +9,7 @@ import {
   GET_VOUCHERS,
   GET_CUSTOMER,
   GET_DASHBOARD_DETAILS,
+  GET_USERS,
 } from "../consts/actionTypes";
 
 export const getCustomers =
@@ -24,6 +25,7 @@ export const getCustomers =
         dispatch({ type: GET_CUSTOMERS, data });
       }
     } catch (error: any) {
+      unauthorizedAccess(error.response.data);
       toast.error(error);
     }
   };
@@ -39,6 +41,7 @@ export const getBills = (id: string | null) => async (dispatch: Function) => {
       toast.error(data.message);
     }
   } catch (error: any) {
+    unauthorizedAccess(error.response.data);
     toast.error(error);
   }
 };
@@ -50,12 +53,14 @@ export const getVouchers =
       const url =
         id !== null && id !== undefined ? `voucher/${id}` : `/voucher`;
       const { data } = await API.get(url);
+      unauthorizedAccess(data);
       if (data.code === 200) {
         dispatch({ type: GET_VOUCHERS, data });
       } else {
         toast.error(data.message);
       }
     } catch (error: any) {
+      unauthorizedAccess(error.response.data);
       toast.error(error);
     }
   };
@@ -70,6 +75,22 @@ export const getDashBoardDetails = () => async (dispatch: Function) => {
       toast.error(data.message);
     }
   } catch (error: any) {
+    unauthorizedAccess(error.response.data);
     toast.error(error);
   }
 };
+
+
+export const getUsers = () => async (dispatch: Function) => {
+  try {
+    dispatch({ type: LOADING, data: true });
+    const {data} = await API.get(`/user/company`)
+    if(data.code === 200) {
+      dispatch({type: GET_USERS, data});
+    } else {
+      toast.error(data.message);
+    }
+  } catch (error) {
+
+  }
+}

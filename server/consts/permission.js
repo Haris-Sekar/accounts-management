@@ -19,6 +19,10 @@ export const DEFAULT_PERMISSION = [
         module: MODULES.DASHBOARD,
         permission: [1, 1, 1, 1],
       },
+      {
+        module: MODULES.USER,
+        permission: [1, 1, 1, 1],
+      },
     ],
   },
   {
@@ -27,14 +31,21 @@ export const DEFAULT_PERMISSION = [
       {
         module: MODULES.CUSTOMERS,
         permission: [1, 0, 0, 0],
-      },{
+      },
+      {
         module: MODULES.BILLS,
         permission: [1, 1, 0, 0],
-      },{
+      },
+      {
         module: MODULES.VOUCHERS,
         permission: [1, 1, 1, 0],
-      },{
+      },
+      {
         module: MODULES.DASHBOARD,
+        permission: [0, 0, 0, 0],
+      },
+      {
+        module: MODULES.USER,
         permission: [0, 0, 0, 0],
       },
     ],

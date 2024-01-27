@@ -14,10 +14,13 @@ const user = new mongoose.Schema({
     type: String,
     required: true,
   },
+  companyId: {
+    type: mongoose.Schema.ObjectId,
+  },
   userType: {
     type: Number,
-    required: true
-  }
+    required: true,
+  },
 });
 
 user.methods.generateToken = function () {
@@ -26,11 +29,10 @@ user.methods.generateToken = function () {
       id: this._id,
       name: this.name,
       email: this.email,
-      userType: this.userType
+      userType: this.userType,
     },
     process.env.PRIVATEKEY
-  ); 
+  );
 };
-const model = mongoose.model('user', user);
+const model = mongoose.model("user", user);
 export default model;
-

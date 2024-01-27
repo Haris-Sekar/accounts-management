@@ -47,8 +47,7 @@ export const addBill = async (req, res) => {
       response = errorFields;
       break addBilTry;
     }
-
-    if (Number(billDate) === NaN) {
+    if (typeof billDate !== Number) {
       // DD/MM/YYYY
       billDate = convertDateToMilliseconds(billDate);
     }

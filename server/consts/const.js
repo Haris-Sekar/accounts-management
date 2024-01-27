@@ -11,6 +11,11 @@ export const MODULES = {
     USER: 4
 }
 export function convertDateToMilliseconds(dateString) {
+
+    if(!dateString.includes('/')) {
+        return dateString;
+    }
+
     // Split the date string into parts
     var parts = dateString.split("/");
     

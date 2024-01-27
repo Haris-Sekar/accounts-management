@@ -17,6 +17,7 @@ const authendicateUser = async (req, res, next) => {
         message: `Unauthorized Access`,
         from: "auth token"
       };
+      console.log(response);
       res.status(code).json(response);
       break authendicateUserTry;
     }
@@ -32,6 +33,7 @@ const authendicateUser = async (req, res, next) => {
         message: `Unauthorized Access`,
         from: 'user validation not found'
       };
+      console.log(response);
       res.status(code).json(response);
       break authendicateUserTry;
     }
@@ -45,6 +47,7 @@ const authendicateUser = async (req, res, next) => {
           message: `Unauthorized Access`,
           from: "compay validation"
         };
+        console.log(response);
         res.status(code).json(response);
         break authendicateUserTry;
       }
@@ -59,6 +62,7 @@ const authendicateUser = async (req, res, next) => {
         message: `Unauthorized Access`,
         from: "email mismatch"
       };
+      console.log(response);
       res.status(code).json(response);
     }
   } catch (error) {
@@ -88,6 +92,7 @@ export const checkPermission = async (req, res, next) => {
         message: "URL not configured",
         code: 404,
       };
+      console.log(response);
       res.status(code).json(response);
       break checkPermissionTry;
     }
@@ -116,11 +121,13 @@ export const checkPermission = async (req, res, next) => {
     ) {
       next();
     } else {
+      console.log(response);
       res.status(code).json(response);
     }
   } catch (error) {
     code = 500;
     response = serverError(error);
+    console.log(response);
     res.status(code).json(response);
   }
 };

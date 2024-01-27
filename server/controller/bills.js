@@ -63,11 +63,7 @@ export const addBill = async (req, res) => {
     });
 
     const result = await newBill.save();
-
-    const data = await google
-      .drive({ version: "v3", auth: auth })
-      .files.get({ fileId, alt: "media" });
-
+    
     if (result) {
       code = 201;
       response = {

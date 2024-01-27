@@ -2,6 +2,7 @@ export const serverError = (error) => {
     return {
         code: 500,
         catchError: error ? error?.message : "",
+        error: error ? JSON.stringify(error) : "",
         message: 'Internal server error'
     }
 }

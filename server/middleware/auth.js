@@ -9,12 +9,13 @@ const authendicateUser = async (req, res, next) => {
   let code, response;
   authendicateUserTry: try {
     let token = req.headers.authorization;
-
+    console.log(token);
     if (!token) {
       code = 401;
       response = {
         code: 401,
         message: `Unauthorized Access`,
+        from: "auth token"
       };
       res.status(code).json(response);
       break authendicateUserTry;
@@ -29,6 +30,7 @@ const authendicateUser = async (req, res, next) => {
       response = {
         code: 401,
         message: `Unauthorized Access`,
+        from: 'user validation not found'
       };
       res.status(code).json(response);
       break authendicateUserTry;
@@ -41,6 +43,7 @@ const authendicateUser = async (req, res, next) => {
         response = {
           code: 401,
           message: `Unauthorized Access`,
+          from: "compay validation"
         };
         res.status(code).json(response);
         break authendicateUserTry;
@@ -54,6 +57,7 @@ const authendicateUser = async (req, res, next) => {
       response = {
         code: 401,
         message: `Unauthorized Access`,
+        from: "email mismatch"
       };
       res.status(code).json(response);
     }
@@ -92,6 +96,8 @@ export const checkPermission = async (req, res, next) => {
     response = {
       message: `Unauthorized access`,
       code: 401,
+      from :"check permission no proermissin",
+      perm: permission.permission[0].permissions
     };
 
     const modulePermission = permission.permission[0].permissions.find(

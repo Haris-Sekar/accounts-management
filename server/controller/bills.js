@@ -47,14 +47,15 @@ export const addBill = async (req, res) => {
       response = errorFields;
       break addBilTry;
     }
-    if (typeof billDate !== Number) {
+    let parsedbilldate = billDate
+    if (typeof parsedbilldate !== Number) {
       // DD/MM/YYYY
-      billDate = convertDateToMilliseconds(billDate);
+      parsedbilldate = convertDateToMilliseconds(billDate);
     }
 
     const newBill = new Bill({
       billNumber: billNo,
-      billDate: billDate,
+      billDate: parsedbilldate,
       customerId: customerId,
       amount: amount,
       gFileId: fileId,

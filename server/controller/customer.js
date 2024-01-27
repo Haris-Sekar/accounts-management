@@ -7,7 +7,7 @@ export const addCustomer = async (req, res) => {
   let code, response;
   addCustomerTry: try {
     let errorFields = fieldValidationError(
-      [`customerName`, `phoneNumber`, `area`],
+      [`customerName`, `phoneNumber`],
       req.body
     );
 
@@ -22,7 +22,7 @@ export const addCustomer = async (req, res) => {
     const newCustomer = new customer({
       customerName,
       phoneNumber,
-      area,
+      area: area ? area : "",
       balance: balance ? balance : 0,
       userId: req.id
     });
@@ -32,9 +32,7 @@ export const addCustomer = async (req, res) => {
     if (result) {
       code = 201;
       response = {
-        message: `Customer created`,
-        customer: result,
-        code: 201,
+        id: result._id
       };
     }
   } catch (error) {

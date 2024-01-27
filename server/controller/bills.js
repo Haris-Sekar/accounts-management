@@ -1,8 +1,9 @@
 import { fieldValidationError, serverError } from "../consts/APIMessage.js";
 import Bill from "../model/bill.js";
 import { google } from "googleapis";
-import fs from "fs";
+import fs, { rmSync } from "fs";
 import path from "path";
+import { convertDateToMilliseconds } from "../consts/const.js";
 
 const KEY_FILE_PATH = path.join("./pk.json");
 const SCOPES = ["https://www.googleapis.com/auth/drive"];
@@ -17,7 +18,7 @@ export const addBill = async (req, res) => {
   addBilTry: try {
     const { billNo, billDate, customerId, amount } = req.body;
     const { file } = req;
-    let fileId = ""; 
+    let fileId = "";
     if (file) {
       const { data } = await google
         .drive({ version: "v3", auth: auth })
@@ -47,6 +48,11 @@ export const addBill = async (req, res) => {
       break addBilTry;
     }
 
+    if (Number(billDate) === NaN) {
+      // DD/MM/YYYY
+      billDate = convertDateToMilliseconds(billDate);
+    }
+
     const newBill = new Bill({
       billNumber: billNo,
       billDate: billDate,
@@ -65,9 +71,7 @@ export const addBill = async (req, res) => {
     if (result) {
       code = 201;
       response = {
-        message: `New Bill has been added`,
-        code: 201,
-        data,
+        id: result._id,
       };
     }
   } catch (error) {
@@ -93,14 +97,16 @@ export const getBills = async (req, res) => {
         ...bill._doc,
         customerName: bill.customerId?.customerName,
       };
-      if(bill.gFileId) {
-        const gData = await google.drive({ version: "v3", auth: auth }).files.get({fileId: bill.gFileId, alt: 'media'});
+      if (bill.gFileId) {
+        const gData = await google
+          .drive({ version: "v3", auth: auth })
+          .files.get({ fileId: bill.gFileId, alt: "media" });
         const parsedGData = {
-            url: gData.config.url,
-            token: gData.config.headers.Authorization
-        }
+          url: gData.config.url,
+          token: gData.config.headers.Authorization,
+        };
         tempBill.gData = parsedGData;
-      }      
+      }
       parsedBills.push(tempBill);
     }
 
@@ -115,6 +121,8 @@ export const getBills = async (req, res) => {
     code = 500;
   }
 
+  fs.readdirSync("../upload").forEach(f => rmSync(`../upload/${f}`));
+
   res.status(code).json(response);
 };
 
@@ -123,6 +131,7 @@ export const updateBill = async (req, res) => {
   try {
     const { id } = req.params;
     const { billNo, billDate, customerId, amount } = req.body;
+    const { file } = req;
     const result = await Bill.updateOne(
       { _id: id },
       {
@@ -133,7 +142,28 @@ export const updateBill = async (req, res) => {
           amount,
         },
       }
-    );
+    ); 
+
+    const bill = await Bill.findOne({ _id: id });
+
+    const fileId = bill.gFileId;
+
+    if (file) {
+      const { data } = google
+        .drive({ version: "v3", auth: auth })
+        .files.update({
+          media: {
+            mimeType: file.mimeType,
+            body: fs.createReadStream(file.path),
+          },
+          requestBody: {
+            name: file.originalname
+          },
+          fileId,
+          fields: "id,name",
+        }); 
+    }
+
     if (result.modifiedCount > 0) {
       response = {
         message: "Bill updated successfully",
@@ -142,7 +172,7 @@ export const updateBill = async (req, res) => {
       code = 200;
     } else {
       response = {
-        message: "Somthing went wrong",
+        message: "Nothing to update",
         code: 500,
       };
       code = 500;

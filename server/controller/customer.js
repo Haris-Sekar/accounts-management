@@ -24,7 +24,8 @@ export const addCustomer = async (req, res) => {
       phoneNumber,
       area,
       balance: balance ? balance : 0,
-      userId: req.id
+      companyId: req.companyId,
+      userid: req.id
     });
 
     const result = await newCustomer.save();
@@ -54,7 +55,7 @@ export const addCustomer = async (req, res) => {
 export const getCustomers = async (req, res) => {
   let code, response;
   try {
-    const customers = await customer.find({userId: req.id});
+    const customers = await customer.find({companyId: req.companyId});
     let parsedCustomer = [];
 
     for (let cus in customers) {
@@ -91,7 +92,6 @@ export const getCustomers = async (req, res) => {
       code: 200,
     };
   } catch (error) {
-    console.log(error);
     response = serverError(error);
     code = 500;
   }

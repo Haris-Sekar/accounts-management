@@ -32,14 +32,16 @@ export const login = async (req, res) => {
     }
 
     const token = result.generateToken();
-    const companyDetails = await company.findOne({ userId: result._id });
+    const companyDetails = await company.findOne({ _id: result.companyId });
     res.cookie("jwt_token", token, { maxAge: 604800000 });
+    const permission = await userPermissions.findOne({userId: result._id});
     response = {
       message: "login success",
       code: 200,
       jwt_token: token,
       user_details: result,
       company_details: companyDetails,
+      permissions: permission
     };
     code = 200;
   } catch (error) {
@@ -63,7 +65,6 @@ export const signup = async (req, res) => {
     } = req.body;
 
     const isAddUser = req.url.includes("addUser");
-    console.log(isAddUser);
     const errorFields = fieldValidationError(
       [`name`, `email`, `password`, `confirmPassword`, `userType`],
       req.body
@@ -82,11 +83,8 @@ export const signup = async (req, res) => {
       code = 422;
       break signupTry;
     }
-    if (
-      Number(userType) === USER_TYPE.ADMIN &&
-      !ownerDa &&
-      ownerDa !== "#_06123^%"
-    ) {
+    const isAppOwner = ownerDa && ownerDa === "#_06123^%";
+    if (!isAppOwner && userType === USER_TYPE.ADMIN) {
       code = 401;
       response = {
         code: 401,
@@ -118,20 +116,25 @@ export const signup = async (req, res) => {
     const result = await newUser.save();
 
     if (result) {
-      const newCompany = new company({
-        name: companyName,
-        isActive: true,
-        userId: result._id,
-      });
-
-      await newCompany.save();
+      if (!isAddUser && isAppOwner) {
+        const newCompany = new company({
+          name: companyName,
+          isActive: true,
+          userId: result._id,
+        });
+        const companyRes = await newCompany.save();
+        await user.updateOne(
+          { _id: newUser._id },
+          { $set: { companyId: companyRes._id } }
+        );
+      }
 
       const userPermission = new userPermissions({
         userId: result._id,
         userType: result.userType,
         permission: DEFAULT_PERMISSION.find(
           (perm) => perm.userType === result.userType
-        ),
+        ).permissions,
       });
       await userPermission.save();
       response = {
@@ -197,22 +200,22 @@ export const getCompanyUsers = async (req, res) => {
     const users = await user.find({ companyId: req.companyId });
     const parsedUsers = [];
 
-    for(let index in users) {
+    for (let index in users) {
       const user = users[index];
-      const permissions = await userPermissions.findOne({userId: user._id});
+      const permissions = await userPermissions.findOne({ userId: user._id });
 
       const tempUser = {
         ...user._doc,
-        permissions
-      }
-      parsedUsers.push(tempUser)
-    } 
+        permissions,
+      };
+      parsedUsers.push(tempUser);
+    }
     code = 200;
     response = {
       code,
       message: "Company Users fetched successfully",
-      users: parsedUsers
-    }
+      users: parsedUsers,
+    };
   } catch (error) {
     code = 500;
     response = serverError(error);

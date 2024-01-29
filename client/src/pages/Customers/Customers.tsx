@@ -27,6 +27,7 @@ import DialogBox from "../../components/Dialog/DialogBox";
 import { IDialogBox } from "../../models/IComponents";
 import { deleteCustomer } from "../../api/services/customers";
 import SearchBar from "../../components/Navbar/SearchBar";
+import { MODULES, hasViewPermission } from "../../consts/consts";
 const style = {
   position: "absolute",
   top: "50%",
@@ -40,6 +41,9 @@ const style = {
 };
 
 const Customers = () => {
+  const permissions = JSON.parse(localStorage.getItem("permissions") as string)
+    .permission[MODULES.CUSTOMERS].permission;
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -126,6 +130,9 @@ const Customers = () => {
     setOpen(false);
   };
   useEffect(() => {
+    if (!hasViewPermission(MODULES.CUSTOMERS)) {
+      navigate("/app");
+    }
     //@ts-ignore
     dispatch(getCustomers(null));
   }, [dispatch, navigate]);
@@ -149,13 +156,13 @@ const Customers = () => {
 
   function editComponent(id: any) {
     return (
-      <span id={id} onClick={handleEdit} style={{color: '#2196f3'}}>
+      <span id={id} onClick={handleEdit} style={{ color: "#2196f3" }}>
         <Edit />
       </span>
     );
   }
   const deleteComponent = (id: string | undefined) => (
-    <span id={id} onClick={handleDelete} style={{color: "#FF4244"}}>
+    <span id={id} onClick={handleDelete} style={{ color: "#FF4244" }}>
       <Delete />
     </span>
   );
@@ -238,7 +245,7 @@ const Customers = () => {
           setSearchResult([]);
           setSearchType(Number(e.currentTarget.value));
           //@ts-ignore
-          document.getElementById('searchQueryInput').value = "";
+          document.getElementById("searchQueryInput").value = "";
         }}
         searchSelectItems={searchSelectItems}
       />
@@ -261,12 +268,20 @@ const Customers = () => {
                   {column.label}
                 </TableCell>
               ))}
-              <TableCell key="edit" align="right" style={{ minWidth: 30 }}>
-                Edit
-              </TableCell>
-              <TableCell key="delete" align="right" style={{ minWidth: 30 }}>
-                Delete
-              </TableCell>
+              {permissions[2] ? (
+                <TableCell key="edit" align="right" style={{ minWidth: 30 }}>
+                  Edit
+                </TableCell>
+              ) : (
+                <></>
+              )}
+              {permissions[3] ? (
+                <TableCell key="delete" align="right" style={{ minWidth: 30 }}>
+                  Delete
+                </TableCell>
+              ) : (
+                <></>
+              )}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -282,6 +297,7 @@ const Customers = () => {
                         key={row.id}
                         id={row.id}
                         onClick={handleCustomerClick}
+                        sx={{cursor: 'pointer'}}
                       >
                         {columns.map((column) => {
                           const value = row[column.id];
@@ -351,12 +367,17 @@ const Customers = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      <SpeedDial
-        ariaLabel="SpeedDial basic example"
-        sx={{ position: "absolute", bottom: 16, right: 16 }}
-        icon={<Add />}
-        onClick={handleOpen}
-      ></SpeedDial>
+      {permissions[1] ? (
+        <SpeedDial
+          ariaLabel="SpeedDial basic example"
+          sx={{ position: "absolute", bottom: 16, right: 16 }}
+          icon={<Add />}
+          onClick={handleOpen}
+        ></SpeedDial>
+      ) : (
+        <></>
+      )}
+
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

@@ -22,7 +22,7 @@ const Pages = () => {
     <Routes>
       <Route path="/auth" element={<Auth />} />
       <Route path="/app" element={<PageLayout />}>
-        <Route path="/app" element={<Dashboard />} />
+        <Route path="/app/dashboard" element={<Dashboard />} />
         <Route path="/app/customers" element={<Customers />} />
         <Route path="/app/customers/:id" element={<CustomerDetailPage />} />
         <Route path="/app/bills" element={<Bills />} />

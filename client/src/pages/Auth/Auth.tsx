@@ -52,7 +52,12 @@ const Auth = () => {
           toast.error(err)
         });
     } else {
-      login({ email: e.email, password: e.password }).then(() => {
+      login({ email: e.email, password: e.password }).then((data) => {
+        const resp = data?.data;
+        localStorage.setItem(`user_details`, JSON.stringify(resp.user_details));
+        localStorage.setItem(`token`, resp.jwt_token);
+        localStorage.setItem(`company_details`, JSON.stringify(resp.company_details))
+        localStorage.setItem(`permissions`, JSON.stringify(resp.permissions))
         navigate('/app?from=auth');
         reset(initialValues);
       }).catch((err) => {

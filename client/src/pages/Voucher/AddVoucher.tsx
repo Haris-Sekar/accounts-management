@@ -64,7 +64,7 @@ const AddVoucher = ({
           toast.error(e);
         });
     } else {
-      console.log(e);
+      // console.log(e);
 
       addVoucher(e)
         .then(() => {

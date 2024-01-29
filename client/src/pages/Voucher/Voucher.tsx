@@ -28,6 +28,7 @@ import { IVoucherDetails } from "../../models/IAddVoucherForm";
 import AddVoucher from "./AddVoucher";
 import { deleteVoucher } from "../../api/services/voucher";
 import SearchBar from "../../components/Navbar/SearchBar";
+import { MODULES, hasViewPermission } from "../../consts/consts";
 
 const style = {
   position: "absolute",
@@ -41,6 +42,9 @@ const style = {
   p: 4,
 };
 const Voucher = () => {
+  const permissions = JSON.parse(localStorage.getItem("permissions") as string)
+    .permission[MODULES.VOUCHERS].permission;
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -151,6 +155,9 @@ const Voucher = () => {
     setOpen(false);
   };
   useEffect(() => {
+    if (!hasViewPermission(MODULES.VOUCHERS)) {
+      navigate("/app");
+    }
     //@ts-ignore
     dispatch(getVouchers(null));
   }, [dispatch, navigate]);
@@ -176,13 +183,13 @@ const Voucher = () => {
 
   function editComponent(id: any) {
     return (
-      <span id={id} onClick={handleEdit} style={{color: '#2196f3'}}>
+      <span id={id} onClick={handleEdit} style={{ color: "#2196f3" }}>
         <Edit />
       </span>
     );
   }
   const deleteComponent = (id: string | undefined) => (
-    <span id={id} onClick={handleDelete} style={{color: "#FF4244"}}>
+    <span id={id} onClick={handleDelete} style={{ color: "#FF4244" }}>
       <Delete />
     </span>
   );
@@ -294,12 +301,20 @@ const Voucher = () => {
                   {column.label}
                 </TableCell>
               ))}
-              <TableCell key="edit" align="right" style={{ minWidth: 30 }}>
-                Edit
-              </TableCell>
-              <TableCell key="delete" align="right" style={{ minWidth: 30 }}>
-                Delete
-              </TableCell>
+              {permissions[2] ? (
+                <TableCell key="edit" align="right" style={{ minWidth: 30 }}>
+                  Edit
+                </TableCell>
+              ) : (
+                <></>
+              )}
+              {permissions[3] ? (
+                <TableCell key="delete" align="right" style={{ minWidth: 30 }}>
+                  Delete
+                </TableCell>
+              ) : (
+                <></>
+              )}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -384,12 +399,16 @@ const Voucher = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      <SpeedDial
-        ariaLabel="SpeedDial basic example"
-        sx={{ position: "absolute", bottom: 16, right: 16 }}
-        icon={<Add />}
-        onClick={handleOpen}
-      ></SpeedDial>
+      {permissions[1] ? (
+        <SpeedDial
+          ariaLabel="SpeedDial basic example"
+          sx={{ position: "absolute", bottom: 16, right: 16 }}
+          icon={<Add />}
+          onClick={handleOpen}
+        ></SpeedDial>
+      ) : (
+        <></>
+      )}
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

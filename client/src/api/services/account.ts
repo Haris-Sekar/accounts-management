@@ -42,10 +42,6 @@ async function login(data: ILogin) {
         },
         success: {
             render({data}) {
-                const resp = data?.data;
-                localStorage.setItem(`user_details`, JSON.stringify(resp.user_details));
-                localStorage.setItem(`token`, resp.jwt_token);
-                localStorage.setItem(`company_details`, JSON.stringify(resp.company_details))
                 return `Login success`
             }
         }

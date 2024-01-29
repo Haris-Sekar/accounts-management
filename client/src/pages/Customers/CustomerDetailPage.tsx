@@ -109,7 +109,7 @@ const CustomerDetailPage = () => {
                                 <CardContent>
                                     <div className="customerDetails">
                                         <div className="customerAvatar">
-                                            <AccountCircleIcon sx={{ fontSize: '40px', color: '#023047' }} />{customer.customerDetails.customerName}
+                                            {customer.customerDetails.customerName}
                                         </div>
                                         <div className="phoneNumber" onClick={() => window.open(`tel:${customer.customerDetails.phoneNumber}`)}><CallIcon /> <span>{customer.customerDetails.phoneNumber}</span></div>
                                         <div className="area">{customer.customerDetails.area}</div>

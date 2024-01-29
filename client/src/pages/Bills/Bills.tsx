@@ -32,6 +32,7 @@ import { toast } from "react-toastify";
 import SearchBar from "../../components/Navbar/SearchBar";
 import axios, { AxiosError } from "axios";
 import { IResponseData } from "../../models/IAuthForm";
+import { MODULES, hasViewPermission } from "../../consts/consts";
 
 const style = {
   position: "absolute",
@@ -45,6 +46,9 @@ const style = {
   p: 4,
 };
 const Bills = () => {
+  const permissions = JSON.parse(localStorage.getItem("permissions") as string)
+    .permission[MODULES.BILLS].permission;
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -123,6 +127,9 @@ const Bills = () => {
     setOpen(false);
   };
   useEffect(() => {
+    if (!hasViewPermission(MODULES.BILLS)) {
+      navigate("/app");
+    }
     //@ts-ignore
     dispatch(getBills(null));
   }, [dispatch, navigate]);
@@ -164,6 +171,7 @@ const Bills = () => {
     setOpen(true);
   }
   function handleDelete(e: any) {
+    e.stopPropagation();
     setDialogDetails({
       title: "Confirm Delete this Bill",
       description: (
@@ -182,8 +190,8 @@ const Bills = () => {
   function deleteSuccessCallback(_e: any, id: string) {
     deleteBill(id)
       .then(() => {
-        //@ts-ignore
-        dispatch(getBills(null));
+        let indexToDelete = bills.findIndex((item: any) => item._id === id);
+        bills.splice(indexToDelete, 1);
         setDeleteDialogOpen(false);
       })
       .catch((e) => {
@@ -309,16 +317,24 @@ const Bills = () => {
                   {column.label}
                 </TableCell>
               ))}
-              <TableCell key="edit" align="right" style={{ minWidth: 30 }}>
-                Edit
-              </TableCell>
-              <TableCell key="delete" align="right" style={{ minWidth: 30 }}>
-                Delete
-              </TableCell>
+              {permissions[2] ? (
+                <TableCell key="edit" align="right" style={{ minWidth: 30 }}>
+                  Edit
+                </TableCell>
+              ) : (
+                <></>
+              )}
+              {permissions[3] ? (
+                <TableCell key="delete" align="right" style={{ minWidth: 30 }}>
+                  Delete
+                </TableCell>
+              ) : (
+                <></>
+              )}
             </TableRow>
           </TableHead>
           <TableBody>
-            {bills.length <=0 && isLoading ? (
+            {bills.length <= 0 && isLoading ? (
               [1, 2, 3, 4, 5].map((_temp) => {
                 return (
                   <TableRow>
@@ -418,12 +434,16 @@ const Bills = () => {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
-      <SpeedDial
-        ariaLabel="SpeedDial basic example"
-        sx={{ position: "absolute", bottom: 16, right: 16 }}
-        icon={<Add />}
-        onClick={handleOpen}
-      ></SpeedDial>
+      {permissions[1] ? (
+        <SpeedDial
+          ariaLabel="SpeedDial basic example"
+          sx={{ position: "absolute", bottom: 16, right: 16 }}
+          icon={<Add />}
+          onClick={handleOpen}
+        ></SpeedDial>
+      ) : (
+        <></>
+      )}
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

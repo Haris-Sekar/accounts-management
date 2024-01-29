@@ -1,0 +1,50 @@
+.revenue-card {
+  background-color: #5e35b1; /* Adjust the color to match the exact purple hue */
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px; /* Adjust the width as needed */
+  min-width: 350px;
+  width: fit-content;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  /* flex-direction: column; */
+  align-items: flex-start;
+  justify-content: space-between;
+  min-height: 150px;
+}
+
+.revenue-card:nth-child(odd) {
+  background-color: #5e35b1;
+}
+.revenue-card:nth-child(even) {
+  background-color: #1e88e5;
+}
+
+.revenue-title {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.revenue-amount {
+  font-size: 2em; /* Adjust the size as needed */
+  font-weight: bold;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.revenue-comparison {
+  font-size: 0.8em;
+  color: #e6e6e6; /* Lighter color for less emphasis */
+  align-self: flex-end;
+}
+
+.revenue-card .img{
+  height: 50px;
+  width: 50px;
+}
+
+.revenue-card .img img{
+  width: 100%;
+  height: 100%;
+}

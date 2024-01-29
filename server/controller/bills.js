@@ -53,7 +53,8 @@ export const addBill = async (req, res) => {
       customerId: customerId,
       amount: amount,
       gFileId: fileId,
-      userId: req.id,
+      companyId: req.companyId,
+      userId: req.id
     });
 
     const result = await newBill.save();
@@ -76,7 +77,7 @@ export const addBill = async (req, res) => {
 export const getBills = async (req, res) => {
   let code, response;
   try {
-    let bills = await Bill.find({ userId: req.id }).populate({
+    let bills = await Bill.find({ companyId: req.companyId }).populate({
       path: "customerId",
       select: `customerName`,
     });

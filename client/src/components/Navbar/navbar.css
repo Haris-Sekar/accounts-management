@@ -1,6 +1,6 @@
 .cusNavbar {
-    background-color: #001219;
-    color: white;
+    color: #001219;
+    border-bottom: 2px solid #ededed;
     font-family: "Zoho Puvi";
 }
 
@@ -28,7 +28,7 @@
     padding: 0 3.5rem 0 1.5rem;
     font-size: 1rem;
     font-family: 'Zoho Puvi';
-    
+
 }
 
 #searchQuerySubmit {
@@ -49,7 +49,7 @@
     gap: 50px;
     justify-content: center;
     align-items: center;
-    
+
 }
 
 .cusNavbar .navItems .profile .userProfile {
@@ -62,34 +62,34 @@
 .mobileNav {
     display: none;
 }
+
 .cusNavbar .serachBar {
     display: flex;
-    gap: 30px;
-    /* font-size: 20px; */
 }
 
 .cusNavbar .serachBar a {
-    color: #f5f5f5;
+    color: #000000;
     transition: all 0.3s ease-in-out;
-    border: 2px solid #001219;
-    padding: 0 2%;
+    border: 2px solid white;
+    padding: 2% 5%;
+    text-decoration: none;
+    border-radius: 10px;
 }
 
 .cusNavbar .serachBar .active {
-    color: #000000;
+    color: #5e35b1;
     border: 2px solid white;
-    padding: 0 2%;
     border-radius: 10px;
-    background-color: #f5f5f5;
+    background-color: #ede7f6;
 }
 
 .cusNavbar .serachBar a:hover {
-    color: #000000;
+    color: #5e35b1;
     border: 2px solid white;
-    padding: 0 2%;
     border-radius: 10px;
-    background-color: #f5f5f5;
+    background-color: #ede7f6;
 }
+
 .cusNavbar .companyDets {
     font-size: 24px;
     word-spacing: 7px;
@@ -102,19 +102,24 @@
     .cusNavbar .companyDets {
         font-size: 25px;
     }
+
     .cusNavbar {
         font-size: 15px;
     }
-    .cusNavbar .navItems { 
+
+    .cusNavbar .navItems {
         flex-direction: column;
-        gap: 20px;
+        /* gap: 20px; */
     }
+
     .cusNavbar .navItems a {
-        padding: 0;
-    } 
+        padding: 2%;
+    }
+
     .customerDetailPageTable {
         max-width: 700px;
     }
+
     .profile {
         margin: 4% 0;
     }
@@ -125,20 +130,20 @@
     .cusNavbar .companyDets {
         font-size: 25px;
     }
+
     .cusNavbar {
         font-size: 13px;
     }
-    .cusNavbar .navItems { 
+
+    .cusNavbar .searchBar {
         flex-direction: column;
-        gap: 12px;
+        flex-wrap: wrap;
     }
-    .cusNavbar .navItems a {
-        padding: 0;
-    } 
+
     .customerDetailPageTable {
         max-width: 400px;
     }
-    
+
 }
 
 .customSelect {
@@ -149,4 +154,11 @@
     margin-right: 1%;
     max-width: 150px;
     min-width: fit-content;
+}
+
+.flexcenter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7%;
 }

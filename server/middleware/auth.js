@@ -9,15 +9,13 @@ const authendicateUser = async (req, res, next) => {
   let code, response;
   authendicateUserTry: try {
     let token = req.headers.authorization;
-    console.log(token);
     if (!token) {
       code = 401;
       response = {
         code: 401,
         message: `Unauthorized Access`,
-        from: "auth token"
+        from: "auth token",
       };
-      console.log(response);
       res.status(code).json(response);
       break authendicateUserTry;
     }
@@ -31,23 +29,29 @@ const authendicateUser = async (req, res, next) => {
       response = {
         code: 401,
         message: `Unauthorized Access`,
-        from: 'user validation not found'
+        from: "user validation not found",
       };
-      console.log(response);
       res.status(code).json(response);
       break authendicateUserTry;
     }
 
     if (user1.email === authJson.email) {
-      const companyDetails = await company.findOne({ userId: user1._id });
+      let companyDetails;
+      let isEmp = false;
+      if (user1.companyId) {
+        companyDetails = await company.findOne({ _id: user1.companyId });
+        isEmp = true;
+      } else {
+        companyDetails = await company.findOne({ userId: user1._id });
+      }
+
       if (!companyDetails) {
         code = 401;
         response = {
           code: 401,
           message: `Unauthorized Access`,
-          from: "compay validation"
+          from: "compay validation",
         };
-        console.log(response);
         res.status(code).json(response);
         break authendicateUserTry;
       }
@@ -60,9 +64,8 @@ const authendicateUser = async (req, res, next) => {
       response = {
         code: 401,
         message: `Unauthorized Access`,
-        from: "email mismatch"
+        from: "email mismatch",
       };
-      console.log(response);
       res.status(code).json(response);
     }
   } catch (error) {
@@ -92,7 +95,6 @@ export const checkPermission = async (req, res, next) => {
         message: "URL not configured",
         code: 404,
       };
-      console.log(response);
       res.status(code).json(response);
       break checkPermissionTry;
     }
@@ -101,33 +103,36 @@ export const checkPermission = async (req, res, next) => {
     response = {
       message: `Unauthorized access`,
       code: 401,
-      from :"check permission no proermissin",
-      perm: permission.permission[0].permissions
+      from: "check permission no proermissin",
     };
 
-    const modulePermission = permission.permission[0].permissions.find(
+    const modulePermission = permission.permission.find(
       (perm) => perm.module === module
     );
 
-    if (method === API_METHODS.GET && modulePermission.permission[0]) {
+    if (method === API_METHODS.GET && Boolean(modulePermission.permission[0])) {
       next();
-    } else if (method === API_METHODS.POST && modulePermission.permission[1]) {
+    } else if (
+      method === API_METHODS.POST &&
+      Boolean(modulePermission.permission[1])
+    ) {
       next();
-    } else if (method === API_METHODS.PATCH && modulePermission.permission[2]) {
+    } else if (
+      method === API_METHODS.PATCH &&
+      Boolean(modulePermission.permission[2])
+    ) {
       next();
     } else if (
       method === API_METHODS.DELETE &&
-      modulePermission.permission[3]
+      Boolean(modulePermission.permission[3])
     ) {
       next();
     } else {
-      console.log(response);
       res.status(code).json(response);
     }
   } catch (error) {
     code = 500;
     response = serverError(error);
-    console.log(response);
     res.status(code).json(response);
   }
 };

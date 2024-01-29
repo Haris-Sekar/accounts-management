@@ -1,9 +1,7 @@
 .customerDetails .customerAvatar {
   font-size: 25px;
   font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
 }
 .customerDetails {
   display: flex;
@@ -28,11 +26,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5%;
-  margin: auto;
-  margin-top: 3%;
-  width: fit-content;
+  gap: 5%; 
   padding: 2%;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 .statsCard {
   display: flex;
@@ -54,7 +51,7 @@
 
 @media only screen and (max-width: 1200px) {
   .statsContainer {
-    gap: 20px;
+    
     flex-wrap: wrap;
   }
 }

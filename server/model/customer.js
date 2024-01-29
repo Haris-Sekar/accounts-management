@@ -16,14 +16,18 @@ const customer = new mongoose.Schema({
   },
   balance: {
     type: Number,
-    require: true
+    require: true,
   },
   userId: {
     type: mongoose.Schema.ObjectId,
-    ref: 'user',
-    require: true
-  }
-}); 
-const model = mongoose.model('customer', customer);
+    ref: "user",
+    require: true,
+  },
+  companyId: {
+    type: mongoose.Schema.ObjectId,
+    ref: "comapny",
+    require: true,
+  },
+});
+const model = mongoose.model("customer", customer);
 export default model;
-

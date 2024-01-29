@@ -7,7 +7,7 @@ export const getDashboardDetails = async (req, res) => {
   let code, response;
   getDashboardDetailsTry: try {
     const allBills = await billModel.find({
-      userId: req.id,
+      companyId: req.companyId,
     });
 
     const totalBillAmount = allBills.reduce(
@@ -16,11 +16,11 @@ export const getDashboardDetails = async (req, res) => {
     );
 
     const allVouchers = await voucherModel.find({
-      userId: req.id,
+      companyId: req.companyId,
     });
 
     const allCustomers = await customerModel.find({
-      userId: req.id,
+      companyId: req.companyId,
     });
 
     const oldBalance = allCustomers.reduce(
@@ -99,7 +99,7 @@ export const getDashboardDetails = async (req, res) => {
         $limit: 20,
       },
     ]);
-    console.log("Top Customers Result:", topCustomers);
+    
     code = 200;
     response = {
       dashboardDetails: {

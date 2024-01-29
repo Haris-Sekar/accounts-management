@@ -25,12 +25,6 @@ API.interceptors.request.use(
 );
 
 const unauthorizedAccess = (res: { code: number; }) => {
-    console.log(res);
-    
-    if (res.code === 401) {
-        localStorage.clear()
-        location.replace('/auth');
-    }
 }
 
 export { API, unauthorizedAccess };

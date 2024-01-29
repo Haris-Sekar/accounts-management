@@ -33,8 +33,13 @@ const voucher = new mongoose.Schema({
         type: String
     },
     userId: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'user',
+        require: true
+    },
+    companyId: {
       type: mongoose.Schema.ObjectId,
-      ref: 'user',
+      ref: 'comapny',
       require: true
     }
 });

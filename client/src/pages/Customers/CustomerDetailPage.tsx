@@ -14,7 +14,6 @@ import Paper from '@mui/material/Paper';
 import { Button, Card, CardContent} from "@mui/material";
 import "./customer.css"
 import CallIcon from '@mui/icons-material/Call';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 const CustomerDetailPage = () => {
     const param = useParams();
     const dispatch = useDispatch();

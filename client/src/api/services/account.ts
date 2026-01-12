@@ -41,7 +41,7 @@ async function login(data: ILogin) {
             }
         },
         success: {
-            render({data}) {
+            render() {
                 return `Login success`
             }
         }

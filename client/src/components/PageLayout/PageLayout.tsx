@@ -1,7 +1,6 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../Navbar/Navbar";
-import { useEffect, useState } from "react";
-import { Analytics } from "@vercel/analytics/react";
+import { useEffect } from "react";
 import { MODULES, MODULE_VS_PATH } from "../../consts/consts";
 
 const PageLayout = () => {

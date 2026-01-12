@@ -19,7 +19,7 @@ import { getCustomers } from "../../action/action";
 import logo from "../../assets/logo.png";
 
 function daysGone(millis: number) {
-  let date = new Date(millis);
+  let date: number = new Date(millis).getTime();
   let now = Date.now();
   let diffInMillis = now - date;
   let daysGone = diffInMillis / (1000 * 60 * 60 * 24);

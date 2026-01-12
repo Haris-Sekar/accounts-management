@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Box, Paper } from "@mui/material";
+import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDashBoardDetails } from "../../action/action";
@@ -20,7 +20,7 @@ const Dashboard = () => {
     dispatch(getDashBoardDetails());
   }, [dispatch]);
 
-  const { dashboardDetails, isLoading } = useSelector(
+  const { dashboardDetails } = useSelector(
     (state: any) => state.customerReducer
   );
   let cardContents: any[] = [

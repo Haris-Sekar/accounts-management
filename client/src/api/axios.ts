@@ -24,7 +24,7 @@ API.interceptors.request.use(
     }
 );
 
-const unauthorizedAccess = (res: { code: number; }) => {
+const unauthorizedAccess = (_res: { code: number; }) => {
 }
 
 export { API, unauthorizedAccess };
